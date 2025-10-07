@@ -1,464 +1,351 @@
-// Charts Module for Multi-Platform Sentiment Analytics Dashboard
-// Uses Plotly.js for all visualizations with Blue theme
-
-// Platform brand colors
-const PLATFORM_COLORS = {
-    doordash: '#FF4D4D',
-    ubereats: '#06C167',
-    grubhub: '#FF8000'
+// Accent & Air Design System - DoorDash Dark Edition
+const COLORS = {
+    primary: '#FF4D4D',        // DoorDash Red (primary accent - brightened for dark mode)
+    blue: '#60A5FA',           // Accent blue (brightened)
+    gold: '#FBBF24',           // Accent gold (brightened)
+    gray: '#9CA3AF',           // Accent gray (brightened)
+    teal: '#2DD4BF',           // Accent teal (brightened)
+    positive: '#34D399',       // Success green (brightened)
+    negative: '#FF4D4D',       // Error red (same as primary)
+    neutral: '#A3A3A3',        // Neutral gray (brightened)
+    gradientStart: '#FF4D4D',  // DoorDash red
+    gradientEnd: '#DC2626'     // Darker red
 };
 
-// Chart configuration
-const CHART_CONFIG = {
-    displayModeBar: false,
-    responsive: true
-};
-
-const CHART_LAYOUT_BASE = {
-    paper_bgcolor: '#1A1A1A',
-    plot_bgcolor: '#1A1A1A',
+// Common layout settings for dark mode
+const commonLayout = {
     font: {
-        family: 'Inter, sans-serif',
+        family: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        size: 12,
         color: '#F5F5F5'
     },
-    margin: { t: 20, r: 20, b: 60, l: 120 }
+    paper_bgcolor: '#1A1A1A',
+    plot_bgcolor: '#0F0F0F',
+    margin: { t: 40, r: 20, b: 60, l: 80 },
+    hoverlabel: {
+        bgcolor: '#2A2A2A',
+        font: { color: '#F5F5F5', size: 13 }
+    }
 };
 
-// Render all charts
-function renderAllCharts(data) {
-    renderAspectBarChart(data);
-    renderSentimentDonut(data);
-    renderTreemap(data, dataProcessor.filters.parentAspects);
-    renderIntensityChart(data);
-    renderCorrelationHeatmap(data);
+const config = {
+    responsive: true,
+    displayModeBar: true,
+    displaylogo: false,
+    modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d', 'autoScale2d']
+};
 
-    // Render pyramid with current dropdown selections
-    const platformA = document.getElementById('platformADropdown').value;
-    const platformB = document.getElementById('platformBDropdown').value;
-    renderPlatformPyramid(data, platformA, platformB);
-}
+const treemapConfig = {
+    ...config,
+    toImageButtonOptions: {
+        format: 'png',
+        filename: 'treemap',
+        height: 500,
+        width: 700,
+        scale: 1
+    },
+    setBackground: 'transparent'
+};
 
-// 1. Parent Aspects Bar Chart (Negative Reviews)
+// 1. Parent Aspects vs Negative Reviews Bar Chart
 function renderAspectBarChart(data) {
-    const aspectCounts = dataProcessor.getNegativeByParentAspect(data);
-
-    const aspects = Object.keys(aspectCounts).sort();
-    const counts = aspects.map(aspect => aspectCounts[aspect]);
+    const negativeData = getNegativeByParentAspect(data);
+    const aspects = Object.keys(negativeData).sort((a, b) => negativeData[b] - negativeData[a]);
+    const counts = aspects.map(a => negativeData[a]);
+    const total = counts.reduce((a, b) => a + b, 0);
 
     const trace = {
-        x: counts,
-        y: aspects,
+        x: aspects.map(a => a.charAt(0).toUpperCase() + a.slice(1)),
+        y: counts,
         type: 'bar',
-        orientation: 'h',
         marker: {
-            color: '#3B82F6',
-            line: {
-                color: '#6D28D9',
-                width: 1
-            }
+            color: COLORS.primary,
+            line: { color: '#0F0F0F', width: 1 }
         },
-        text: counts.map(count => count.toString()),
+        text: counts.map((c, i) => `${c} (${((c / total) * 100).toFixed(1)}%)`),
         textposition: 'outside',
-        hovertemplate: '<b>%{y}</b><br>Negative Reviews: %{x}<extra></extra>'
+        hovertemplate: '<b>%{x}</b><br>' +
+                       'Negative Reviews: %{y}<br>' +
+                       'Percentage: %{text}<br>' +
+                       '<extra></extra>'
     };
 
     const layout = {
-        ...CHART_LAYOUT_BASE,
+        ...commonLayout,
         xaxis: {
-            title: 'Number of Negative Reviews',
+            title: 'Parent Aspect',
+            tickangle: -45,
             gridcolor: '#2A2A2A',
             color: '#A3A3A3'
         },
         yaxis: {
-            title: '',
+            title: 'Number of Negative Reviews',
             gridcolor: '#2A2A2A',
             color: '#A3A3A3'
-        },
-        height: 400
+        }
     };
 
-    Plotly.newPlot('aspectBarChart', [trace], layout, CHART_CONFIG);
+    Plotly.newPlot('aspectBarChart', [trace], layout, config);
 }
 
-// 2. Sentiment Donut Chart
-function renderSentimentDonut(data) {
-    const distribution = dataProcessor.getSentimentDistribution(data);
-
-    const trace = {
-        values: [distribution.positive, distribution.negative, distribution.neutral],
-        labels: ['Positive', 'Negative', 'Neutral'],
-        type: 'pie',
-        hole: 0.4,
-        marker: {
-            colors: ['#34D399', '#EF4444', '#9CA3AF'],
-            line: {
-                color: '#1A1A1A',
-                width: 2
-            }
-        },
-        textinfo: 'label+percent',
-        textfont: {
-            size: 14,
-            color: '#F5F5F5'
-        },
-        hovertemplate: '<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>'
-    };
-
-    const layout = {
-        ...CHART_LAYOUT_BASE,
-        showlegend: true,
-        legend: {
-            orientation: 'h',
-            x: 0.5,
-            xanchor: 'center',
-            y: -0.1,
-            font: {
-                color: '#A3A3A3'
-            }
-        },
-        height: 400
-    };
-
-    Plotly.newPlot('sentimentDonut', [trace], layout, CHART_CONFIG);
-}
-
-// 3. Subcategory Treemap (Negative Reviews)
-function renderTreemap(data, parentFilter = ['all']) {
-    const treemapData = dataProcessor.getSubcategoryTreemapData(data, parentFilter);
+// 2. Subcategory Treemap
+function renderTreemap(data, parentFilter = 'all') {
+    const treemapData = getSubcategoryTreemapData(data, parentFilter);
 
     if (treemapData.length === 0) {
-        // Show empty state
         const layout = {
-            ...CHART_LAYOUT_BASE,
+            ...commonLayout,
             annotations: [{
                 text: 'No data available for selected filters',
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.5,
-                y: 0.5,
                 showarrow: false,
-                font: {
-                    size: 16,
-                    color: '#A3A3A3'
-                }
+                font: { size: 16, color: '#696969' }
             }],
-            height: 400
+            xaxis: { visible: false },
+            yaxis: { visible: false }
         };
-        Plotly.newPlot('treemapChart', [], layout, CHART_CONFIG);
+        Plotly.newPlot('treemapChart', [], layout, config);
         return;
     }
 
-    const labels = treemapData.map(d => d.subcategory);
+    const labels = treemapData.map(d => d.subcategory.replace(/_/g, ' ').toUpperCase());
     const parents = treemapData.map(d => '');
     const values = treemapData.map(d => d.count);
     const avgRatings = treemapData.map(d => parseFloat(d.avgRating));
-
-    // Color scale based on average rating (lower rating = darker red)
-    const colorscale = [
-        [0, '#7C2D12'],      // Dark red (low rating)
-        [0.5, '#DC2626'],    // Medium red
-        [1, '#FCA5A5']       // Light red (high rating)
-    ];
 
     const trace = {
         type: 'treemap',
         labels: labels,
         parents: parents,
         values: values,
+        text: treemapData.map(d => `${d.count} reviews`),
+        textposition: 'middle center',
         marker: {
             colors: avgRatings,
-            colorscale: colorscale,
+            colorscale: [
+                [0, '#450A0A'],      // Very dark red (low rating)
+                [0.25, '#7F1D1D'],   // Dark red
+                [0.5, '#DC2626'],    // Red
+                [0.75, '#FF4D4D'],   // DoorDash red (bright)
+                [1, '#FCA5A5']       // Light red
+            ],
             showscale: true,
             colorbar: {
-                title: 'Avg Rating',
-                titleside: 'right',
-                tickmode: 'linear',
-                tick0: 1,
-                dtick: 1,
-                len: 0.5,
-                lenmode: 'fraction',
+                title: { text: 'Avg Rating', font: { color: '#F5F5F5' } },
                 thickness: 15,
-                thicknessmode: 'pixels',
+                len: 0.7,
+                tickfont: { color: '#A3A3A3' },
+                bgcolor: 'rgba(0,0,0,0)',
                 outlinewidth: 0
             },
-            line: {
-                color: '#1A1A1A',
-                width: 2
-            }
+            line: { color: '#0F0F0F', width: 2 }
         },
-        text: labels.map((label, i) => `${label}<br>Count: ${values[i]}<br>Avg Rating: ${avgRatings[i]}`),
-        textposition: 'middle center',
-        hovertemplate: '<b>%{label}</b><br>Negative Reviews: %{value}<br>Avg Rating: %{color:.2f}<extra></extra>'
+        hovertemplate: '<b>%{label}</b><br>' +
+                       'Reviews: %{value}<br>' +
+                       'Avg Rating: %{color:.2f}<br>' +
+                       '<extra></extra>'
     };
 
     const layout = {
-        ...CHART_LAYOUT_BASE,
-        margin: { t: 10, r: 10, b: 10, l: 10 },
-        height: 400
+        font: {
+            family: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+            size: 12,
+            color: '#F5F5F5'
+        },
+        paper_bgcolor: '#1A1A1A',
+        plot_bgcolor: '#1A1A1A',
+        margin: { t: 0, r: 0, b: 0, l: 0 },
+        hoverlabel: {
+            bgcolor: '#2A2A2A',
+            font: { color: '#F5F5F5', size: 13 }
+        }
     };
 
-    Plotly.newPlot('treemapChart', [trace], layout, CHART_CONFIG);
+    Plotly.newPlot('treemapChart', [trace], layout, treemapConfig);
 }
 
-// 4. Top 3 Focus Areas by Intensity
+// 3. Top 3 Focus Areas (Intensity Chart)
 function renderIntensityChart(data) {
-    const intensityData = dataProcessor.calculateIntensity(data);
-    const top3 = intensityData.slice(0, 3);
+    const intensityData = calculateIntensity(data).slice(0, 3);
 
-    if (top3.length === 0) {
-        // Show empty state
+    if (intensityData.length === 0) {
         const layout = {
-            ...CHART_LAYOUT_BASE,
+            ...commonLayout,
             annotations: [{
-                text: 'No negative reviews found',
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.5,
-                y: 0.5,
+                text: 'No negative reviews in selected period',
                 showarrow: false,
-                font: {
-                    size: 16,
-                    color: '#A3A3A3'
-                }
+                font: { size: 16, color: '#696969' }
             }],
-            height: 400
+            xaxis: { visible: false },
+            yaxis: { visible: false }
         };
-        Plotly.newPlot('intensityChart', [], layout, CHART_CONFIG);
+        Plotly.newPlot('intensityChart', [], layout, config);
         return;
     }
 
-    const subcategories = top3.map(d => d.subcategory);
-    const intensities = top3.map(d => d.intensity);
-
-    // Purple gradient for top 3
-    const colors = ['#3B82F6', '#2563EB', '#1D4ED8'];
-
     const trace = {
-        x: intensities,
-        y: subcategories,
+        x: intensityData.map(d => d.intensity),
+        y: intensityData.map(d => d.subcategory.replace(/_/g, ' ').toUpperCase()),
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: colors,
-            line: {
-                color: '#581C87',
-                width: 1
-            }
+            color: [COLORS.primary, '#EF4444', '#F87171'],
+            line: { color: '#0F0F0F', width: 1 }
         },
-        text: intensities.map(i => i.toFixed(1)),
+        text: intensityData.map(d => `Intensity: ${d.intensity.toFixed(0)}`),
         textposition: 'outside',
-        hovertemplate: '<b>%{y}</b><br>Intensity: %{x:.2f}<extra></extra>'
+        hovertemplate: '<b>%{y}</b><br>' +
+                       'Total Intensity: %{x:.0f}<br>' +
+                       'Review Count: %{customdata}<br>' +
+                       '<extra></extra>',
+        customdata: intensityData.map(d => d.count)
     };
 
     const layout = {
-        ...CHART_LAYOUT_BASE,
+        ...commonLayout,
         xaxis: {
-            title: 'Intensity Score (6 - Rating)',
+            title: 'Total Intensity Score (6 - Rating)',
             gridcolor: '#2A2A2A',
             color: '#A3A3A3'
         },
         yaxis: {
             title: '',
-            gridcolor: '#2A2A2A',
-            color: '#A3A3A3',
-            autorange: 'reversed'
-        },
-        height: 400
+            automargin: true,
+            color: '#A3A3A3'
+        }
     };
 
-    Plotly.newPlot('intensityChart', [trace], layout, CHART_CONFIG);
+    Plotly.newPlot('intensityChart', [trace], layout, config);
 }
 
-// 5. Correlation Heatmap (Jaccard Similarity)
+// 4. Correlation Heatmap (Subcategories) - Matching reference PNG
 function renderCorrelationHeatmap(data) {
-    const { matrix, aspects } = dataProcessor.calculateCorrelationMatrix(data);
+    const { matrix, subcategories } = calculateCorrelationMatrix(data);
 
-    if (aspects.length === 0) {
-        // Show empty state
-        const layout = {
-            ...CHART_LAYOUT_BASE,
-            annotations: [{
-                text: 'No data available for correlation analysis',
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.5,
-                y: 0.5,
-                showarrow: false,
-                font: {
-                    size: 16,
-                    color: '#A3A3A3'
-                }
-            }],
-            height: 500
-        };
-        Plotly.newPlot('correlationHeatmap', [], layout, CHART_CONFIG);
-        return;
-    }
-
-    // Purple/blue heatmap colorscale
-    const colorscale = [
-        [0, '#0F0F0F'],      // Very dark (no correlation)
-        [0.3, '#1E3A8A'],    // Dark blue
-        [0.5, '#2563EB'],    // Medium blue
-        [0.7, '#3B82F6'],    // Light blue
-        [1, '#93C5FD']       // Very light blue
-    ];
+    const z = subcategories.map(s1 => subcategories.map(s2 => matrix[s1][s2]));
+    const labels = subcategories.map(s => s.replace(/_/g, ' '));
 
     const trace = {
-        z: matrix,
-        x: aspects,
-        y: aspects,
+        z: z,
+        x: labels,
+        y: labels,
         type: 'heatmap',
-        colorscale: colorscale,
+        colorscale: [
+            [0, '#0F0F0F'],      // Dark background (no correlation)
+            [0.2, '#450A0A'],    // Very dark red
+            [0.4, '#7F1D1D'],    // Dark red
+            [0.6, '#DC2626'],    // Medium red
+            [0.8, '#FF4D4D'],    // DoorDash red (bright)
+            [1, '#FCA5A5']       // Light red (strong correlation)
+        ],
         showscale: true,
         colorbar: {
-            title: 'Jaccard<br>Similarity',
-            titleside: 'right',
-            len: 0.7,
-            lenmode: 'fraction',
+            title: {
+                text: 'Jaccard Similarity<br>(Co-occurrence Rate)',
+                font: { size: 11, color: '#F5F5F5' }
+            },
             thickness: 20,
-            thicknessmode: 'pixels',
-            outlinewidth: 0
+            len: 0.8,
+            x: 1.02,
+            tickfont: { color: '#A3A3A3' }
         },
-        hovertemplate: '<b>%{y}</b> ↔ <b>%{x}</b><br>Similarity: %{z:.3f}<extra></extra>'
+        hovertemplate: '<b>%{y} & %{x}</b><br>' +
+                       'Co-occurrence: %{z:.4f}<br>' +
+                       '<extra></extra>',
+        xgap: 1,
+        ygap: 1
     };
+
+    // Get container width to make heatmap fill the card
+    const container = document.getElementById('correlationHeatmap');
+    const containerWidth = container.offsetWidth;
+    const size = Math.min(containerWidth - 300, 1000); // Leave room for margins and colorbar
 
     const layout = {
-        ...CHART_LAYOUT_BASE,
+        ...commonLayout,
+        plot_bgcolor: '#0F0F0F',
+        paper_bgcolor: '#1A1A1A',
         xaxis: {
-            tickangle: -45,
             side: 'bottom',
-            color: '#A3A3A3'
+            tickangle: -45,
+            tickfont: { size: 10, color: '#A3A3A3' },
+            gridcolor: '#2A2A2A',
+            showgrid: true
         },
         yaxis: {
-            color: '#A3A3A3'
+            tickfont: { size: 10, color: '#A3A3A3' },
+            gridcolor: '#2A2A2A',
+            showgrid: true,
+            scaleanchor: 'x',
+            scaleratio: 1
         },
-        margin: { t: 20, r: 120, b: 120, l: 120 },
-        height: Math.max(500, aspects.length * 25),
-        width: Math.max(700, aspects.length * 25)
+        margin: { t: 40, r: 120, b: 180, l: 150 },
+        width: size,
+        height: size
     };
 
-    Plotly.newPlot('correlationHeatmap', [trace], layout, CHART_CONFIG);
+    Plotly.newPlot('correlationHeatmap', [trace], layout, config);
 }
 
-// 6. NEW: Platform Comparison Pyramid Chart
-function renderPlatformPyramid(data, platformA, platformB) {
-    const comparisonData = dataProcessor.getPlatformComparisonData(data, platformA, platformB);
+// 5. Sentiment Distribution Donut Chart
+function renderSentimentDonut(data) {
+    const sentimentCounts = getSentimentDistribution(data);
 
-    if (comparisonData.subcategories.length === 0) {
-        // Show empty state
-        const layout = {
-            ...CHART_LAYOUT_BASE,
-            annotations: [{
-                text: 'No negative reviews found for selected platforms',
-                xref: 'paper',
-                yref: 'paper',
-                x: 0.5,
-                y: 0.5,
-                showarrow: false,
-                font: {
-                    size: 16,
-                    color: '#A3A3A3'
-                }
-            }],
-            height: 600
-        };
-        Plotly.newPlot('platformPyramid', [], layout, CHART_CONFIG);
-        return;
-    }
-
-    const subcategories = comparisonData.subcategories;
-    const platformAValues = subcategories.map(sub => -(comparisonData.platformA[sub] || 0));
-    const platformBValues = subcategories.map(sub => comparisonData.platformB[sub] || 0);
-
-    // Platform A (left side - negative values)
-    const traceA = {
-        x: platformAValues,
-        y: subcategories,
-        type: 'bar',
-        orientation: 'h',
-        name: platformA.charAt(0).toUpperCase() + platformA.slice(1),
+    const trace = {
+        values: [sentimentCounts.positive, sentimentCounts.negative, sentimentCounts.neutral],
+        labels: ['Positive', 'Negative', 'Neutral'],
+        type: 'pie',
+        hole: 0.55,
+        domain: { y: [0.15, 1] },
         marker: {
-            color: PLATFORM_COLORS[platformA.toLowerCase()] || '#3B82F6',
-            line: {
-                color: '#1A1A1A',
-                width: 1
-            }
+            colors: ['#34D399', '#FF4D4D', '#9CA3AF'],  // Success green (bright), DoorDash red (bright), neutral gray
+            line: { color: '#0F0F0F', width: 2 }
         },
-        text: platformAValues.map(v => Math.abs(v)),
+        textinfo: 'label+percent',
         textposition: 'outside',
-        hovertemplate: `<b>${platformA.toUpperCase()}</b><br>%{y}<br>Count: %{text}<extra></extra>`
-    };
-
-    // Platform B (right side - positive values)
-    const traceB = {
-        x: platformBValues,
-        y: subcategories,
-        type: 'bar',
-        orientation: 'h',
-        name: platformB.charAt(0).toUpperCase() + platformB.slice(1),
-        marker: {
-            color: PLATFORM_COLORS[platformB.toLowerCase()] || '#2563EB',
-            line: {
-                color: '#1A1A1A',
-                width: 1
-            }
-        },
-        text: platformBValues,
-        textposition: 'outside',
-        hovertemplate: `<b>${platformB.toUpperCase()}</b><br>%{y}<br>Count: %{text}<extra></extra>`
+        hovertemplate: '<b>%{label}</b><br>' +
+                       'Count: %{value}<br>' +
+                       'Percentage: %{percent}<br>' +
+                       '<extra></extra>'
     };
 
     const layout = {
-        ...CHART_LAYOUT_BASE,
-        barmode: 'overlay',
-        xaxis: {
-            title: 'Number of Negative Reviews',
-            gridcolor: '#2A2A2A',
-            color: '#A3A3A3',
-            zeroline: true,
-            zerolinecolor: '#4B5563',
-            zerolinewidth: 2,
-            tickvals: (() => {
-                const maxA = Math.max(...platformAValues.map(Math.abs));
-                const maxB = Math.max(...platformBValues);
-                const maxVal = Math.max(maxA, maxB);
-                const step = Math.ceil(maxVal / 5);
-                const ticks = [];
-                for (let i = -maxVal; i <= maxVal; i += step) {
-                    ticks.push(i);
-                }
-                return ticks;
-            })(),
-            ticktext: (() => {
-                const maxA = Math.max(...platformAValues.map(Math.abs));
-                const maxB = Math.max(...platformBValues);
-                const maxVal = Math.max(maxA, maxB);
-                const step = Math.ceil(maxVal / 5);
-                const texts = [];
-                for (let i = -maxVal; i <= maxVal; i += step) {
-                    texts.push(Math.abs(i).toString());
-                }
-                return texts;
-            })()
-        },
-        yaxis: {
-            title: '',
-            gridcolor: '#2A2A2A',
-            color: '#A3A3A3'
-        },
+        ...commonLayout,
+        showlegend: true,
         legend: {
             orientation: 'h',
-            x: 0.5,
+            yanchor: 'top',
+            y: -0.05,
             xanchor: 'center',
-            y: 1.05,
-            font: {
-                color: '#F5F5F5'
-            }
+            x: 0.5,
+            font: { color: '#F5F5F5' }
         },
-        margin: { t: 60, r: 80, b: 80, l: 200 },
-        height: Math.max(600, subcategories.length * 30)
+        margin: { t: 20, r: 20, b: 80, l: 20 }
     };
 
-    Plotly.newPlot('platformPyramid', [traceA, traceB], layout, CHART_CONFIG);
+    Plotly.newPlot('sentimentDonut', [trace], layout, config);
+}
+
+// Render all charts
+function renderAllCharts(data) {
+    // Get checked checkboxes from custom dropdown
+    const checkboxes = document.querySelectorAll('.aspect-checkbox:checked');
+
+    // Safety check: if checkboxes don't exist yet, default to 'all'
+    let aspectFilter = 'all';
+
+    if (checkboxes && checkboxes.length > 0) {
+        const checkedBoxes = Array.from(checkboxes);
+        const selectedValues = checkedBoxes.map(cb => cb.value);
+
+        // If "all" is selected or nothing is selected, pass 'all'
+        aspectFilter = selectedValues.includes('all') || selectedValues.length === 0
+            ? 'all'
+            : selectedValues;
+    }
+
+    renderAspectBarChart(data);
+    renderTreemap(data, aspectFilter);
+    renderIntensityChart(data);
+    renderCorrelationHeatmap(data);
+    renderSentimentDonut(data);
 }
