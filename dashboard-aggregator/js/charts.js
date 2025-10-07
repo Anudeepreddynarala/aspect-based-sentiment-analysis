@@ -1,5 +1,5 @@
 // Charts Module for Multi-Platform Sentiment Analytics Dashboard
-// Uses Plotly.js for all visualizations with Purple/Blue theme
+// Uses Plotly.js for all visualizations with Blue theme
 
 // Platform brand colors
 const PLATFORM_COLORS = {
@@ -51,7 +51,7 @@ function renderAspectBarChart(data) {
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: '#8B5CF6',
+            color: '#3B82F6',
             line: {
                 color: '#6D28D9',
                 width: 1
@@ -231,7 +231,7 @@ function renderIntensityChart(data) {
     const intensities = top3.map(d => d.intensity);
 
     // Purple gradient for top 3
-    const colors = ['#8B5CF6', '#7C3AED', '#6D28D9'];
+    const colors = ['#3B82F6', '#2563EB', '#1D4ED8'];
 
     const trace = {
         x: intensities,
@@ -298,10 +298,10 @@ function renderCorrelationHeatmap(data) {
     // Purple/blue heatmap colorscale
     const colorscale = [
         [0, '#0F0F0F'],      // Very dark (no correlation)
-        [0.3, '#3B0764'],    // Dark purple
-        [0.5, '#6D28D9'],    // Purple
-        [0.7, '#8B5CF6'],    // Light purple
-        [1, '#C4B5FD']       // Very light purple
+        [0.3, '#1E3A8A'],    // Dark blue
+        [0.5, '#2563EB'],    // Medium blue
+        [0.7, '#3B82F6'],    // Light blue
+        [1, '#93C5FD']       // Very light blue
     ];
 
     const trace = {
@@ -379,7 +379,7 @@ function renderPlatformPyramid(data, platformA, platformB) {
         orientation: 'h',
         name: platformA.charAt(0).toUpperCase() + platformA.slice(1),
         marker: {
-            color: PLATFORM_COLORS[platformA.toLowerCase()] || '#8B5CF6',
+            color: PLATFORM_COLORS[platformA.toLowerCase()] || '#3B82F6',
             line: {
                 color: '#1A1A1A',
                 width: 1
@@ -398,7 +398,7 @@ function renderPlatformPyramid(data, platformA, platformB) {
         orientation: 'h',
         name: platformB.charAt(0).toUpperCase() + platformB.slice(1),
         marker: {
-            color: PLATFORM_COLORS[platformB.toLowerCase()] || '#6366F1',
+            color: PLATFORM_COLORS[platformB.toLowerCase()] || '#2563EB',
             line: {
                 color: '#1A1A1A',
                 width: 1

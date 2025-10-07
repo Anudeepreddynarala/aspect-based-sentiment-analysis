@@ -1,11 +1,11 @@
-/* Multi-Platform Sentiment Analytics Dashboard - Purple/Blue Theme */
-/* "Accent & Air" Design Philosophy with Purple/Blue Primary */
+/* Multi-Platform Sentiment Analytics Dashboard - Blue Theme */
+/* "Accent & Air" Design Philosophy with Blue Primary */
 
 :root {
-    /* Primary Colors - Purple/Blue Accent */
+    /* Primary Colors - Blue Accent */
     --primary-purple: #8B5CF6;
-    --primary-blue: #6366F1;
-    --primary-accent: #8B5CF6; /* Main accent color */
+    --primary-blue: #3B82F6;
+    --primary-accent: #3B82F6; /* Main accent color */
 
     /* Platform Brand Colors */
     --doordash-red: #FF4D4D;
