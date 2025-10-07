@@ -2,7 +2,7 @@
 
 > **Interactive dashboard for analyzing DoorDash customer feedback with dynamic filtering and comprehensive visualizations**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://your-username.github.io/sentiment/dashboard/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)
 
 ## 📊 Overview
 
@@ -38,14 +38,14 @@ This dashboard provides deep insights into DoorDash customer sentiment across 13
 
 ### Option 1: View Live Dashboard (Recommended)
 
-Visit the hosted version: **[Live Dashboard Link](https://your-username.github.io/sentiment/dashboard/)**
+Visit the hosted version: **[Live Dashboard Link](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)**
 
 ### Option 2: Run Locally
 
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/sentiment.git
-cd sentiment/dashboard
+cd aspect-based-sentiment-analysis/doordash-dashboard
 
 # Start a local server (Python 3)
 python -m http.server 8000
@@ -286,7 +286,7 @@ git push -u origin main
 4. Click **Save**
 
 ### Step 3: Access Dashboard
-- URL format: `https://your-username.github.io/sentiment/dashboard/`
+- URL format: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/`
 - Wait 1-2 minutes for deployment
 - Verify all charts load correctly
 
