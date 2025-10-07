@@ -8,13 +8,13 @@
 
 ## 📊 Executive Summary
 
-Analyzed **7,800 customer reviews** across DoorDash, UberEats, and GrubHub to extract actionable insights on customer pain points and satisfaction drivers. Built an AI-powered pipeline that automatically identifies and categorizes customer feedback into 18 distinct aspects with sentiment classification.
+Analyzed **7,800 unique customer reviews** (2,600 per platform) across DoorDash, UberEats, and GrubHub to extract actionable insights on customer pain points and satisfaction drivers. Built an AI-powered pipeline that automatically identifies and categorizes customer feedback into 18 distinct aspects with sentiment classification.
 
 **Key Findings:**
 - **70.7% negative sentiment** across platforms indicates critical service gaps
-- **Customer support** is the #1 complaint category (2,059 mentions)
-- **App usability issues** are the #2 pain point (1,429 mentions)
-- **GrubHub shows highest negative sentiment** (74.8% vs 65.4% DoorDash, 67.2% UberEats)
+- **Customer support** is the #1 complaint category (1,867 negative mentions)
+- **Delivery reliability** is the #2 pain point (1,246 negative mentions)
+- **GrubHub shows highest negative sentiment** (64.2%) vs DoorDash (54.3%) and UberEats (60.7%)
 
 ---
 
@@ -172,6 +172,38 @@ python run_analysis.py
 
 ---
 
+## 🖥️ Interactive Dashboards
+
+### Live Demos
+- **[Multi-Platform Dashboard](dashboard-aggregator/)** - Compare all three platforms (7,800 total reviews)
+- **[DoorDash Dashboard](doordash-dashboard/)** - DoorDash-specific insights (2,600 reviews)
+- **[UberEats Dashboard](dashboard-ubereats/)** - UberEats-specific insights (2,600 reviews)
+- **[GrubHub Dashboard](dashboard-grubhub/)** - GrubHub-specific insights (2,600 reviews)
+
+### Features
+- **Real-time KPI Tracking**: Average rating, top pain points, correlation analysis
+- **Interactive Visualizations**:
+  - Parent aspect distribution bar charts
+  - Sentiment breakdown donut charts
+  - Subcategory treemaps with intensity heatmaps
+  - Co-occurrence correlation matrices
+- **Dynamic Filtering**: Date range and aspect filtering
+- **Platform Comparison**: Side-by-side performance metrics
+
+### Running Dashboards Locally
+```bash
+# Navigate to any dashboard directory
+cd dashboard-aggregator/
+
+# Start local server
+python -m http.server 8000
+
+# Open in browser
+# http://localhost:8000
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -185,6 +217,10 @@ python run_analysis.py
 │   └── pipeline.py                # End-to-end pipeline orchestration
 ├── output/                        # Analysis results
 │   └── complete_analysis_*.csv   # Final output with all insights
+├── dashboard-aggregator/          # Multi-platform analytics dashboard
+├── doordash-dashboard/            # DoorDash-specific dashboard
+├── dashboard-ubereats/            # UberEats-specific dashboard
+├── dashboard-grubhub/             # GrubHub-specific dashboard
 ├── run_analysis.py                # Main execution script
 └── README.md                      # This file
 ```

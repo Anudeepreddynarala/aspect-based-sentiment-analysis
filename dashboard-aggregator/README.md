@@ -1,12 +1,12 @@
-# DoorDash Sentiment Analytics Dashboard
+# Multi-Platform Food Delivery Sentiment Analytics Dashboard
 
-> **Interactive dashboard for analyzing DoorDash customer feedback with dynamic filtering and comprehensive visualizations**
+> **Interactive dashboard comparing customer sentiment across DoorDash, UberEats, and GrubHub**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://your-username.github.io/sentiment/dashboard/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://your-username.github.io/sentiment/dashboard-aggregator/)
 
 ## 📊 Overview
 
-This dashboard provides deep insights into DoorDash customer sentiment across 13,000+ reviews from March-September 2025. Built with Plotly.js, it features interactive charts, dynamic filtering, and real-time calculations to identify key pain points and improvement opportunities.
+This dashboard provides comparative insights across **7,800 unique customer reviews** from DoorDash, UberEats, and GrubHub (2,600 reviews per platform). Built with Plotly.js, it features interactive charts, dynamic filtering, and real-time calculations to identify platform-specific pain points and cross-platform trends.
 
 ### Key Features
 
