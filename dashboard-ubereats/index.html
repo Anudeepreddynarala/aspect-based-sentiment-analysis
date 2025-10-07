@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UberEats Sentiment Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 class="dashboard-title">UberEats Sentiment Analytics</h1>
+                <p class="dashboard-subtitle">Customer Feedback Intelligence Dashboard</p>
+            </div>
+        </header>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" class="date-input">
+            </div>
+            <div class="filter-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" class="date-input">
+            </div>
+            <div class="filter-group">
+                <label>Parent Aspect:</label>
+                <div class="custom-dropdown">
+                    <button type="button" class="dropdown-button" id="aspectDropdownButton">
+                        <span id="dropdownLabel">All Aspects</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="aspectDropdownMenu">
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="all" checked class="aspect-checkbox" data-label="All Aspects">
+                            <span>All Aspects</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="service" class="aspect-checkbox" data-label="Service">
+                            <span>Service</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="delivery" class="aspect-checkbox" data-label="Delivery">
+                            <span>Delivery</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="price" class="aspect-checkbox" data-label="Price">
+                            <span>Price</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="food" class="aspect-checkbox" data-label="Food">
+                            <span>Food</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="interface" class="aspect-checkbox" data-label="Interface">
+                            <span>Interface</span>
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="overall" class="aspect-checkbox" data-label="Overall">
+                            <span>Overall</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button id="resetFilters" class="reset-button">Reset Filters</button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-section">
+            <div class="kpi-card">
+                <div class="kpi-label">Average Rating</div>
+                <div class="kpi-value" id="avgRating">-</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Top Negative Subcategory</div>
+                <div class="kpi-value small-text" id="topNegative">-</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Highest Correlation</div>
+                <div class="kpi-value small-text" id="topCorrelation">-</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Row 1 - Bar Chart and Donut Chart -->
+            <div class="chart-container">
+                <h2 class="chart-title">Parent Aspects vs Negative Reviews</h2>
+                <div id="aspectBarChart"></div>
+            </div>
+            <div class="chart-container">
+                <h2 class="chart-title">Overall Sentiment Distribution</h2>
+                <div id="sentimentDonut"></div>
+            </div>
+
+            <!-- Row 2 - Treemap and Intensity -->
+            <div class="chart-container">
+                <h2 class="chart-title">Subcategory Breakdown (Negative Sentiment)</h2>
+                <div id="treemapChart"></div>
+            </div>
+            <div class="chart-container">
+                <h2 class="chart-title">Top 3 Focus Areas (By Intensity)</h2>
+                <div id="intensityChart"></div>
+            </div>
+
+            <!-- Row 3 - Heatmap Full Width -->
+            <div class="chart-container full-width">
+                <h2 class="chart-title">Subcategory Co-occurrence Heatmap</h2>
+                <div id="correlationHeatmap"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>UberEats Sentiment Analytics Dashboard | Data Period: March - September 2025 | Total Reviews: <span id="totalReviews">-</span></p>
+        </footer>
+    </div>
+
+    <script src="js/data-processor.js?v=9"></script>
+    <script src="js/charts.js?v=9"></script>
+    <script src="js/filters.js?v=9"></script>
+    <script>
+        // Initialize dashboard on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+        });
+    </script>
+</body>
+</html>
