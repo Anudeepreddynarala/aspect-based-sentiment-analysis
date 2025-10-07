@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Platform Sentiment Analytics Dashboard</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External Libraries -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1 class="dashboard-title">Multi-Platform Sentiment Analytics Dashboard</h1>
+            <p class="dashboard-subtitle">Comprehensive sentiment analysis across DoorDash, UberEats, and GrubHub</p>
+        </header>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="filter-group">
+                <label for="platformFilter">Platform</label>
+                <div class="custom-dropdown">
+                    <button class="dropdown-toggle" id="platformFilterToggle">
+                        <span id="platformFilterLabel">All Platforms</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="platformFilterMenu">
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="all" checked> All Platforms
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="doordash"> DoorDash
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="ubereats"> UberEats
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="grubhub"> GrubHub
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" class="date-input">
+            </div>
+
+            <div class="filter-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" class="date-input">
+            </div>
+
+            <div class="filter-group">
+                <label for="aspectFilter">Aspect</label>
+                <div class="custom-dropdown">
+                    <button class="dropdown-toggle" id="aspectFilterToggle">
+                        <span id="aspectFilterLabel">All Aspects</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="aspectFilterMenu">
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="all" checked> All Aspects
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="service"> Service
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="delivery"> Delivery
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="price"> Price
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="food"> Food
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="interface"> Interface
+                        </label>
+                        <label class="dropdown-item">
+                            <input type="checkbox" value="overall"> Overall
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="resetFilters" class="reset-button">Reset Filters</button>
+        </section>
+
+        <!-- KPI Cards -->
+        <section class="kpi-section">
+            <div class="kpi-card">
+                <div class="kpi-label">Average Rating</div>
+                <div class="kpi-value" id="avgRating">-</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Top Negative Aspect</div>
+                <div class="kpi-value" id="topNegative">-</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Total Reviews Analyzed</div>
+                <div class="kpi-value" id="totalReviews">-</div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="charts-section">
+            <!-- Row 1: Bar Chart + Donut -->
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3 class="chart-title">Negative Reviews by Parent Aspect</h3>
+                    <div id="aspectBarChart" class="chart-container"></div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Sentiment Distribution</h3>
+                    <div id="sentimentDonut" class="chart-container"></div>
+                </div>
+            </div>
+
+            <!-- Row 2: Treemap + Intensity -->
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3 class="chart-title">Subcategory Breakdown (Negative Reviews)</h3>
+                    <div id="treemapChart" class="chart-container"></div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Top 3 Focus Areas by Intensity</h3>
+                    <div id="intensityChart" class="chart-container"></div>
+                </div>
+            </div>
+
+            <!-- Row 3: Correlation Heatmap (Full Width, Centered) -->
+            <div class="chart-row full-width">
+                <div class="chart-card centered-card">
+                    <h3 class="chart-title">Aspect Co-occurrence Matrix</h3>
+                    <div id="correlationHeatmap" class="chart-container centered-chart"></div>
+                </div>
+            </div>
+
+            <!-- Row 4: Platform Comparison Pyramid (Full Width) -->
+            <div class="chart-row full-width">
+                <div class="chart-card">
+                    <h3 class="chart-title">Platform Comparison - Negative Reviews by Subcategory</h3>
+                    <div class="platform-controls">
+                        <div class="platform-select-group">
+                            <label for="platformADropdown">Platform A:</label>
+                            <select id="platformADropdown" class="platform-select">
+                                <option value="doordash">DoorDash</option>
+                                <option value="ubereats">UberEats</option>
+                                <option value="grubhub">GrubHub</option>
+                            </select>
+                        </div>
+                        <div class="platform-select-group">
+                            <label for="platformBDropdown">Platform B:</label>
+                            <select id="platformBDropdown" class="platform-select">
+                                <option value="doordash">DoorDash</option>
+                                <option value="ubereats" selected>UberEats</option>
+                                <option value="grubhub">GrubHub</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="platformPyramid" class="chart-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>Multi-Platform Sentiment Analytics Dashboard</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data-processor.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/filters.js"></script>
+</body>
+</html>

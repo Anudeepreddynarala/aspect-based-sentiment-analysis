@@ -23,19 +23,22 @@ function loadData() {
             header: true,
             skipEmptyLines: true,
             complete: (results) => {
-                rawData = results.data.map(row => ({
-                    review_id: row.review_id,
-                    review_text: row.review_text,
-                    subcategory: row.subcategory,
-                    parent_aspect: row.parent_aspect,
-                    sentiment: row.sentiment,
-                    confidence: parseFloat(row.confidence),
-                    rating: parseInt(row.rating),
-                    date: new Date(row.date),
-                    platform: row.platform
-                }));
+                // Filter for DoorDash platform only
+                rawData = results.data
+                    .filter(row => row.platform === 'doordash')
+                    .map(row => ({
+                        review_id: row.review_id,
+                        review_text: row.review_text,
+                        subcategory: row.subcategory,
+                        parent_aspect: row.parent_aspect,
+                        sentiment: row.sentiment,
+                        confidence: parseFloat(row.confidence),
+                        rating: parseInt(row.rating),
+                        date: new Date(row.date),
+                        platform: row.platform
+                    }));
                 filteredData = [...rawData];
-                console.log(`Loaded ${rawData.length} records`);
+                console.log(`Loaded ${rawData.length} DoorDash records`);
                 resolve();
             },
             error: (error) => reject(error)
@@ -76,9 +79,16 @@ function applyFilters() {
     return filteredData;
 }
 
-// Calculate average rating
+// Calculate average rating (per unique review, not per row)
 function calculateAvgRating(data) {
-    const ratings = data.map(d => d.rating).filter(r => !isNaN(r));
+    // Group by review_id and take first rating (all rows with same review_id have same rating)
+    const ratingsByReview = {};
+    data.forEach(d => {
+        if (!ratingsByReview[d.review_id] && !isNaN(d.rating)) {
+            ratingsByReview[d.review_id] = d.rating;
+        }
+    });
+    const ratings = Object.values(ratingsByReview);
     if (ratings.length === 0) return 0;
     return (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2);
 }
