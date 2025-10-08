@@ -1,16 +1,16 @@
-// Accent & Air Design System - Multi-Platform Blue Edition
+// Accent & Air Design System - DoorDash Red Edition
 const COLORS = {
-    primary: '#60A5FA',        // Aggregator Blue (primary accent - brightened for dark mode)
-    blue: '#60A5FA',           // Accent blue (brightened)
+    primary: '#FF4D4D',        // DoorDash Red (primary accent)
+    red: '#FF4D4D',            // Accent red (DoorDash brand)
     orange: '#FB923C',         // Accent orange (brightened)
     gold: '#FBBF24',           // Accent gold (brightened)
     gray: '#9CA3AF',           // Accent gray (brightened)
     teal: '#2DD4BF',           // Accent teal (brightened)
     positive: '#34D399',       // Success green (brightened)
-    negative: '#FF4D4D',       // Error red (kept for semantic meaning)
+    negative: '#991B1B',       // Dark red (for negative sentiment)
     neutral: '#A3A3A3',        // Neutral gray (brightened)
-    gradientStart: '#60A5FA',  // Blue gradient start
-    gradientEnd: '#3B82F6'     // Darker blue gradient end
+    gradientStart: '#FF6B6B',  // Light red gradient start
+    gradientEnd: '#DC2626'     // Darker red gradient end
 };
 
 // Platform brand colors
@@ -130,11 +130,11 @@ function renderTreemap(data, parentFilter = 'all') {
         marker: {
             colors: avgRatings,
             colorscale: [
-                [0, '#1E3A8A'],      // Very dark blue (low rating)
-                [0.25, '#1E40AF'],   // Dark blue
-                [0.5, '#3B82F6'],    // Medium blue
-                [0.75, '#60A5FA'],   // Aggregator blue (bright)
-                [1, '#93C5FD']       // Light blue
+                [0, '#7F1D1D'],      // Very dark red (low rating)
+                [0.25, '#991B1B'],   // Dark red
+                [0.5, '#DC2626'],    // Medium red
+                [0.75, '#FF4D4D'],   // DoorDash red (bright)
+                [1, '#FCA5A5']       // Light red
             ],
             showscale: true,
             colorbar: {
@@ -196,7 +196,7 @@ function renderIntensityChart(data) {
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: ['#60A5FA', '#3B82F6', '#2563EB'],  // Blue gradient (bright to darker)
+            color: ['#FF6B6B', '#EF4444', '#DC2626'],  // Red gradient (bright to darker)
             line: { color: '#0F0F0F', width: 1 }
         },
         text: intensityData.map(d => `Intensity: ${d.intensity.toFixed(0)}`),
@@ -239,11 +239,11 @@ function renderCorrelationHeatmap(data) {
         type: 'heatmap',
         colorscale: [
             [0, '#0F0F0F'],      // Dark background (no correlation)
-            [0.2, '#1E3A8A'],    // Very dark blue
-            [0.4, '#1E40AF'],    // Dark blue
-            [0.6, '#3B82F6'],    // Medium blue
-            [0.8, '#60A5FA'],    // Aggregator blue (bright)
-            [1, '#93C5FD']       // Light blue (strong correlation)
+            [0.2, '#7F1D1D'],    // Very dark red
+            [0.4, '#991B1B'],    // Dark red
+            [0.6, '#DC2626'],    // Medium red
+            [0.8, '#FF4D4D'],    // DoorDash red (bright)
+            [1, '#FCA5A5']       // Light red (strong correlation)
         ],
         showscale: true,
         colorbar: {
