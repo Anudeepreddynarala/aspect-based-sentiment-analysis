@@ -457,9 +457,4 @@ function renderAllCharts(data) {
     renderIntensityChart(data);
     renderCorrelationHeatmap(data);
     renderSentimentDonut(data);
-
-    // Render comparison pyramid with selected platforms
-    const leftPlatform = document.getElementById('leftPlatform')?.value || 'doordash';
-    const rightPlatform = document.getElementById('rightPlatform')?.value || 'ubereats';
-    renderComparisonPyramid(data, leftPlatform, rightPlatform);
 }
