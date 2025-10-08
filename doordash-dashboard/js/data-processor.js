@@ -8,6 +8,7 @@ async function initializeDashboard() {
     try {
         await loadData();
         setDefaultDateRange();
+        initializeFilters();
         updateDashboard();
     } catch (error) {
         console.error('Error initializing dashboard:', error);

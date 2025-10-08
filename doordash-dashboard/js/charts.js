@@ -305,7 +305,7 @@ function renderSentimentDonut(data) {
         hole: 0.55,
         domain: { y: [0.15, 1] },
         marker: {
-            colors: ['#60A5FA', '#1E40AF', '#9CA3AF'],  // Blue (positive), Dark blue (negative), Gray (neutral)
+            colors: ['#FF6B6B', '#991B1B', '#9CA3AF'],  // Light red (positive), Dark red (negative), Gray (neutral)
             line: { color: '#0F0F0F', width: 2 }
         },
         textinfo: 'label+percent',

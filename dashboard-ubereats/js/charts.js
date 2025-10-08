@@ -297,7 +297,7 @@ function renderSentimentDonut(data) {
         hole: 0.55,
         domain: { y: [0.15, 1] },
         marker: {
-            colors: ['#34D399', '#06C167', '#9CA3AF'],  // Success green (bright), UberEats green (bright), neutral gray
+            colors: ['#10B981', '#065F46', '#9CA3AF'],  // Light green (positive), Dark green (negative), Gray (neutral)
             line: { color: '#0F0F0F', width: 2 }
         },
         textinfo: 'label+percent',
