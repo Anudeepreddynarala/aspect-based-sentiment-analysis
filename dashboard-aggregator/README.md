@@ -2,7 +2,7 @@
 
 > **Interactive dashboard comparing customer sentiment across DoorDash, UberEats, and GrubHub**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://your-username.github.io/sentiment/dashboard-aggregator/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-60A5FA?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)
 
 ## 📊 Overview
 

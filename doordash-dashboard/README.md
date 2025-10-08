@@ -2,7 +2,7 @@
 
 > **Interactive dashboard for analyzing DoorDash customer feedback with dynamic filtering and comprehensive visualizations**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://your-username.github.io/sentiment/doordash-dashboard/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)
 
 ## 📊 Overview
 

@@ -175,10 +175,10 @@ python run_analysis.py
 ## 🖥️ Interactive Dashboards
 
 ### Live Demos
-- **[Multi-Platform Dashboard](dashboard-aggregator/)** - Compare all three platforms (7,800 total reviews)
-- **[DoorDash Dashboard](doordash-dashboard/)** - DoorDash-specific insights (2,600 reviews)
-- **[UberEats Dashboard](dashboard-ubereats/)** - UberEats-specific insights (2,600 reviews)
-- **[GrubHub Dashboard](dashboard-grubhub/)** - GrubHub-specific insights (2,600 reviews)
+- **[Multi-Platform Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)** - Compare all three platforms (7,800 total reviews)
+- **[DoorDash Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)** - DoorDash-specific insights (2,600 reviews)
+- **[UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/)** - UberEats-specific insights (2,600 reviews)
+- **[GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/)** - GrubHub-specific insights (2,600 reviews)
 
 ### Features
 - **Real-time KPI Tracking**: Average rating, top pain points, correlation analysis
