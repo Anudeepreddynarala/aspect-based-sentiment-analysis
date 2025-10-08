@@ -33,33 +33,74 @@ This project aims to understand the pain points of customers who utilize these F
 
 ### Two-Stage AI Pipeline
 
-#### Stage 1: Aspect Extraction (Qwen 2.5 14B LLM)
-- Identifies **all relevant subcategories** mentioned in each review
-- Uses strict boundary definitions to prevent overlap
-- Multi-label classification: one review → multiple aspects
-- **Example**: *"Cold pizza, rude driver"* → `[food_quality, driver_behavior]`
+#### Stage 1: Aspect & Sentiment Classification (Fine-tuned FABSA RoBERTa)
+- Each customer review is first passed through a RoBERTa model fine-tuned for aspect-based sentiment analysis.
+- The model automatically identifies all relevant **parent aspects** present in the text and determines the **sentiment** (positive, neutral, negative) for each detected aspect.
+- This stage provides a structured overview of which major experience areas (e.g., food, delivery, service, price, interface, overall) are discussed and how customers feel about them.
+- **Example**:  
+  - Input: *"The pizza was cold and soggy, but the app was easy to use."*  
+  - Output: `{ 'food': 'negative', 'interface': 'positive' }`
 
-#### Stage 2: Sentiment Analysis (FABSA RoBERTa)
-- Classifies sentiment (positive/neutral/negative) per aspect
-- Fine-tuned on 14,000 food delivery reviews
-- 93.97% validation accuracy
-- **Example**: `food_quality` → **negative** (94% confidence)
+#### Stage 2: Subcategory Extraction (Qwen 2.5 14B LLM)
+- For each detected aspect in a review, a large language model (Qwen 2.5 14B) further breaks down the feedback into **fine-grained subcategories** for deeper insight.
+- This step helps clarify exactly what part of an aspect (e.g., food quality vs. food taste) is being praised or criticized.
+- Subcategories are extracted using strict definitions and boundary rules to ensure non-overlapping, actionable categories.
+- **Example**:  
+  - For "food" aspect in *"The pizza was cold and soggy"*, returns: `[food_quality, food_freshness]`  
+  - For "interface" aspect in *"The app was easy to use"*, returns: `[app_usability]`
+
+### Aspects & Subcategories
+
+The following parent aspects and their subcategories are used (with strict definitions):
+
+#### Food
+- **food_quality**: Physical condition and preparation of food ONLY. Temperature, texture, cooking level, consistency.
+- **food_taste**: Flavor and seasoning ONLY. Taste, spice, saltiness, sweetness, blandness.
+- **food_freshness**: Age and freshness of ingredients ONLY. Spoilage, expired items, wilted produce.
+- **food_presentation**: Visual appearance and plating ONLY. Looks, arrangement, garnish.
+
+#### Delivery
+- **delivery_speed**: Time taken for delivery ONLY. Fast, slow, late, early, on-time.
+- **delivery_reliability**: Accuracy and dependability ONLY. Wrong/missing items, address issues.
+- **driver_behavior**: Driver’s conduct and professionalism ONLY. Politeness, rudeness, communication.
+- **packaging_quality**: Physical packaging condition ONLY. Sealed, damaged, leaking, secure containers.
+
+#### Service
+- **customer_support**: Help from support team ONLY. Response to complaints, refunds, issue resolution.
+- **staff_attitude**: Restaurant staff behavior ONLY (not driver). Kitchen staff, order takers, management.
+- **responsiveness**: Communication speed ONLY. Promptness from restaurant or support.
+
+#### Price
+- **value_for_money**: Perceived quality vs. cost ONLY. Portion size, worth it.
+- **fees_charges**: Delivery/service fees ONLY. Extra charges, transparency.
+- **discounts_promotions**: Deals, coupons, and their application.
+- **pricing_fairness**: Billing accuracy ONLY. Overcharge, wrong price.
+
+#### Interface
+- **app_usability**: Ease of use, bugs ONLY. App crashes, navigation, clarity.
+- **navigation**: Finding items or restaurants ONLY. Search, menu organization.
+- **app_features**: Specific app features ONLY. Tracking, payment, customization.
+
+#### Overall
+- **overall_satisfaction**: Vague or general feedback not specific to any above aspect.
+
+Each subcategory is defined with clear boundaries to ensure high-quality, non-overlapping labeling. For more detail on subcategory definitions and keywords, see the [`aspect_extraction.py`](https://github.com/Anudeepreddynarala/aspect-based-sentiment-analysis/blob/main/src/aspect_extraction.py) file.
 
 ### Architecture Diagram
 ```
 Customer Review
       ↓
-┌─────────────────────────┐
-│  Qwen 2.5 14B (GPU)     │  Extract subcategories
-│  "What is this about?"  │  → [food_quality, driver_behavior]
-└─────────────────────────┘
+┌──────────────────────────────┐
+│  FABSA RoBERTa (GPU)         │  Detect aspects + sentiment
+│  "What is discussed & how?"  │  → {food: negative, interface: positive}
+└──────────────────────────────┘
       ↓
-┌─────────────────────────┐
-│  FABSA RoBERTa (GPU)    │  Analyze sentiment per aspect
-│  "How do they feel?"    │  → food_quality: negative
-└─────────────────────────┘      driver_behavior: negative
+┌──────────────────────────────┐
+│  Qwen 2.5 14B (GPU)          │  Extract subcategories for each aspect
+│  "What about this aspect?"   │  → food: [food_quality, food_freshness]
+└──────────────────────────────┘
       ↓
-  Actionable Insights
+  Highly Actionable Insights
 ```
 
 ---
