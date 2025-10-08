@@ -1,15 +1,15 @@
-// Accent & Air Design System - DoorDash Dark Edition
+// Accent & Air Design System - UberEats Dark Edition
 const COLORS = {
-    primary: '#FF4D4D',        // DoorDash Red (primary accent - brightened for dark mode)
+    primary: '#06C167',        // UberEats Green (primary accent - brightened for dark mode)
     blue: '#60A5FA',           // Accent blue (brightened)
     gold: '#FBBF24',           // Accent gold (brightened)
     gray: '#9CA3AF',           // Accent gray (brightened)
     teal: '#2DD4BF',           // Accent teal (brightened)
     positive: '#34D399',       // Success green (brightened)
-    negative: '#FF4D4D',       // Error red (same as primary)
+    negative: '#06C167',       // Error green (same as primary)
     neutral: '#A3A3A3',        // Neutral gray (brightened)
-    gradientStart: '#FF4D4D',  // DoorDash red
-    gradientEnd: '#DC2626'     // Darker red
+    gradientStart: '#06C167',  // UberEats green
+    gradientEnd: '#05A858'     // Darker green
 };
 
 // Common layout settings for dark mode
@@ -122,11 +122,11 @@ function renderTreemap(data, parentFilter = 'all') {
         marker: {
             colors: avgRatings,
             colorscale: [
-                [0, '#450A0A'],      // Very dark red (low rating)
-                [0.25, '#7F1D1D'],   // Dark red
-                [0.5, '#DC2626'],    // Red
-                [0.75, '#FF4D4D'],   // DoorDash red (bright)
-                [1, '#FCA5A5']       // Light red
+                [0, '#022C22'],      // Very dark green (low rating)
+                [0.25, '#064E3B'],   // Dark green
+                [0.5, '#05A858'],    // Green
+                [0.75, '#06C167'],   // UberEats green (bright)
+                [1, '#6EE7B7']       // Light green
             ],
             showscale: true,
             colorbar: {
@@ -188,7 +188,7 @@ function renderIntensityChart(data) {
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: [COLORS.primary, '#EF4444', '#F87171'],
+            color: [COLORS.primary, '#10B981', '#34D399'],
             line: { color: '#0F0F0F', width: 1 }
         },
         text: intensityData.map(d => `Intensity: ${d.intensity.toFixed(0)}`),
@@ -231,11 +231,11 @@ function renderCorrelationHeatmap(data) {
         type: 'heatmap',
         colorscale: [
             [0, '#0F0F0F'],      // Dark background (no correlation)
-            [0.2, '#450A0A'],    // Very dark red
-            [0.4, '#7F1D1D'],    // Dark red
-            [0.6, '#DC2626'],    // Medium red
-            [0.8, '#FF4D4D'],    // DoorDash red (bright)
-            [1, '#FCA5A5']       // Light red (strong correlation)
+            [0.2, '#022C22'],    // Very dark green
+            [0.4, '#064E3B'],    // Dark green
+            [0.6, '#05A858'],    // Medium green
+            [0.8, '#06C167'],    // UberEats green (bright)
+            [1, '#6EE7B7']       // Light green (strong correlation)
         ],
         showscale: true,
         colorbar: {
@@ -297,7 +297,7 @@ function renderSentimentDonut(data) {
         hole: 0.55,
         domain: { y: [0.15, 1] },
         marker: {
-            colors: ['#FF6B6B', '#991B1B', '#9CA3AF'],  // Bright red (positive), Dark red (negative), Gray (neutral)
+            colors: ['#10B981', '#14532D', '#9CA3AF'],  // Bright green (positive), Very dark green (negative), Gray (neutral)
             line: { color: '#0F0F0F', width: 2 }
         },
         textinfo: 'label+percent',

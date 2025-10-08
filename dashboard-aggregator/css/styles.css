@@ -1,7 +1,7 @@
-/* Accent & Air Design System - DoorDash Dark Edition */
+/* Accent & Air Design System - Multi-Platform Blue Edition */
 :root {
     /* Primary Accent */
-    --doordash-red: #FF4D4D;
+    --aggregator-blue: #60A5FA;
 
     /* Dark Neutrals (Foundation) */
     --page-background: #0F0F0F;
@@ -17,6 +17,7 @@
     --accent-gold: #FBBF24;
     --accent-gray: #9CA3AF;
     --accent-teal: #2DD4BF;
+    --accent-orange: #FB923C;
 
     /* Semantic Colors */
     --color-success: #34D399;
@@ -68,7 +69,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 4px;
-    color: var(--doordash-red);
+    color: var(--aggregator-blue);
 }
 
 .dashboard-subtitle {
@@ -144,12 +145,12 @@ body {
 }
 
 .dropdown-button:hover {
-    border-color: var(--doordash-red);
+    border-color: var(--aggregator-blue);
 }
 
 .dropdown-button:focus {
     outline: none;
-    border-color: var(--doordash-red);
+    border-color: var(--aggregator-blue);
     box-shadow: 0 0 0 3px rgba(235, 26, 0, 0.1);
 }
 
@@ -200,7 +201,7 @@ body {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    accent-color: var(--doordash-red);
+    accent-color: var(--aggregator-blue);
 }
 
 .dropdown-item span {
@@ -212,14 +213,14 @@ body {
 .date-input:focus,
 .aspect-select:focus {
     outline: none;
-    border-color: var(--doordash-red);
+    border-color: var(--aggregator-blue);
     box-shadow: 0 0 0 3px rgba(235, 26, 0, 0.1);
 }
 
 .reset-button {
     font-family: 'Inter', sans-serif;
     padding: 10px 24px;
-    background: var(--doordash-red);
+    background: var(--aggregator-blue);
     color: white;
     border: none;
     border-radius: 6px;
@@ -238,6 +239,67 @@ body {
 .reset-button:active {
     transform: translateY(0);
     box-shadow: var(--shadow-card);
+}
+
+/* Comparison Controls */
+.comparison-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--card-background);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.platform-selector-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.selector-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.platform-select {
+    font-family: 'Inter', sans-serif;
+    padding: 10px 16px;
+    background: var(--page-background);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 150px;
+}
+
+.platform-select:hover {
+    border-color: var(--aggregator-blue);
+}
+
+.platform-select:focus {
+    outline: none;
+    border-color: var(--aggregator-blue);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.vs-divider {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--aggregator-blue);
+    padding: 0 16px;
+    letter-spacing: 2px;
 }
 
 /* KPI Cards */
@@ -489,7 +551,7 @@ body {
     width: 20px;
     height: 20px;
     border: 3px solid var(--border-color);
-    border-top-color: var(--doordash-red);
+    border-top-color: var(--aggregator-blue);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -512,5 +574,5 @@ body {
 
 .js-plotly-plot .plotly .modebar-btn:hover {
     background: var(--page-background) !important;
-    color: var(--doordash-red) !important;
+    color: var(--aggregator-blue) !important;
 }

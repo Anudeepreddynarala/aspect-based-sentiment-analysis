@@ -1,15 +1,23 @@
-// Accent & Air Design System - DoorDash Dark Edition
+// Accent & Air Design System - Multi-Platform Blue Edition
 const COLORS = {
-    primary: '#FF4D4D',        // DoorDash Red (primary accent - brightened for dark mode)
+    primary: '#60A5FA',        // Aggregator Blue (primary accent - brightened for dark mode)
     blue: '#60A5FA',           // Accent blue (brightened)
+    orange: '#FB923C',         // Accent orange (brightened)
     gold: '#FBBF24',           // Accent gold (brightened)
     gray: '#9CA3AF',           // Accent gray (brightened)
     teal: '#2DD4BF',           // Accent teal (brightened)
     positive: '#34D399',       // Success green (brightened)
-    negative: '#FF4D4D',       // Error red (same as primary)
+    negative: '#FF4D4D',       // Error red (kept for semantic meaning)
     neutral: '#A3A3A3',        // Neutral gray (brightened)
-    gradientStart: '#FF4D4D',  // DoorDash red
-    gradientEnd: '#DC2626'     // Darker red
+    gradientStart: '#60A5FA',  // Blue gradient start
+    gradientEnd: '#3B82F6'     // Darker blue gradient end
+};
+
+// Platform brand colors
+const PLATFORM_COLORS = {
+    doordash: '#FF4D4D',       // DoorDash Red
+    ubereats: '#06C167',       // UberEats Green
+    grubhub: '#FB923C'         // GrubHub Orange
 };
 
 // Common layout settings for dark mode
@@ -122,11 +130,11 @@ function renderTreemap(data, parentFilter = 'all') {
         marker: {
             colors: avgRatings,
             colorscale: [
-                [0, '#450A0A'],      // Very dark red (low rating)
-                [0.25, '#7F1D1D'],   // Dark red
-                [0.5, '#DC2626'],    // Red
-                [0.75, '#FF4D4D'],   // DoorDash red (bright)
-                [1, '#FCA5A5']       // Light red
+                [0, '#1E3A8A'],      // Very dark blue (low rating)
+                [0.25, '#1E40AF'],   // Dark blue
+                [0.5, '#3B82F6'],    // Medium blue
+                [0.75, '#60A5FA'],   // Aggregator blue (bright)
+                [1, '#93C5FD']       // Light blue
             ],
             showscale: true,
             colorbar: {
@@ -188,7 +196,7 @@ function renderIntensityChart(data) {
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: [COLORS.primary, '#EF4444', '#F87171'],
+            color: ['#60A5FA', '#3B82F6', '#2563EB'],  // Blue gradient (bright to darker)
             line: { color: '#0F0F0F', width: 1 }
         },
         text: intensityData.map(d => `Intensity: ${d.intensity.toFixed(0)}`),
@@ -231,11 +239,11 @@ function renderCorrelationHeatmap(data) {
         type: 'heatmap',
         colorscale: [
             [0, '#0F0F0F'],      // Dark background (no correlation)
-            [0.2, '#450A0A'],    // Very dark red
-            [0.4, '#7F1D1D'],    // Dark red
-            [0.6, '#DC2626'],    // Medium red
-            [0.8, '#FF4D4D'],    // DoorDash red (bright)
-            [1, '#FCA5A5']       // Light red (strong correlation)
+            [0.2, '#1E3A8A'],    // Very dark blue
+            [0.4, '#1E40AF'],    // Dark blue
+            [0.6, '#3B82F6'],    // Medium blue
+            [0.8, '#60A5FA'],    // Aggregator blue (bright)
+            [1, '#93C5FD']       // Light blue (strong correlation)
         ],
         showscale: true,
         colorbar: {
@@ -297,7 +305,7 @@ function renderSentimentDonut(data) {
         hole: 0.55,
         domain: { y: [0.15, 1] },
         marker: {
-            colors: ['#34D399', '#FF4D4D', '#9CA3AF'],  // Success green (bright), DoorDash red (bright), neutral gray
+            colors: ['#60A5FA', '#1E40AF', '#9CA3AF'],  // Blue (positive), Dark blue (negative), Gray (neutral)
             line: { color: '#0F0F0F', width: 2 }
         },
         textinfo: 'label+percent',
@@ -325,6 +333,107 @@ function renderSentimentDonut(data) {
     Plotly.newPlot('sentimentDonut', [trace], layout, config);
 }
 
+// 6. Platform Comparison Population Pyramid
+function renderComparisonPyramid(data, leftPlatform, rightPlatform) {
+    // Filter data by platform
+    const leftData = data.filter(d => d.platform === leftPlatform);
+    const rightData = data.filter(d => d.platform === rightPlatform);
+
+    // Get negative review counts by subcategory for each platform
+    const leftNegative = leftData.filter(d => d.sentiment === 'negative');
+    const rightNegative = rightData.filter(d => d.sentiment === 'negative');
+
+    // Count by subcategory
+    const leftCounts = {};
+    const rightCounts = {};
+
+    leftNegative.forEach(row => {
+        leftCounts[row.subcategory] = (leftCounts[row.subcategory] || 0) + 1;
+    });
+
+    rightNegative.forEach(row => {
+        rightCounts[row.subcategory] = (rightCounts[row.subcategory] || 0) + 1;
+    });
+
+    // Get all unique subcategories and sort by total mentions
+    const allSubcats = new Set([...Object.keys(leftCounts), ...Object.keys(rightCounts)]);
+    const subcatArray = Array.from(allSubcats).map(subcat => ({
+        name: subcat,
+        total: (leftCounts[subcat] || 0) + (rightCounts[subcat] || 0)
+    })).sort((a, b) => b.total - a.total).slice(0, 15); // Top 15
+
+    const subcategories = subcatArray.map(s => s.name);
+    const labels = subcategories.map(s => s.replace(/_/g, ' '));
+
+    // Create traces (left side = negative values, right side = positive values)
+    const leftTrace = {
+        y: labels,
+        x: subcategories.map(s => -(leftCounts[s] || 0)), // Negative values for left side
+        type: 'bar',
+        orientation: 'h',
+        name: leftPlatform.charAt(0).toUpperCase() + leftPlatform.slice(1),
+        marker: {
+            color: PLATFORM_COLORS[leftPlatform] || COLORS.blue,
+            line: { color: '#0F0F0F', width: 1 }
+        },
+        hovertemplate: '<b>%{y}</b><br>' +
+                       leftPlatform.toUpperCase() + ': %{customdata}<br>' +
+                       '<extra></extra>',
+        customdata: subcategories.map(s => leftCounts[s] || 0)
+    };
+
+    const rightTrace = {
+        y: labels,
+        x: subcategories.map(s => (rightCounts[s] || 0)), // Positive values for right side
+        type: 'bar',
+        orientation: 'h',
+        name: rightPlatform.charAt(0).toUpperCase() + rightPlatform.slice(1),
+        marker: {
+            color: PLATFORM_COLORS[rightPlatform] || COLORS.orange,
+            line: { color: '#0F0F0F', width: 1 }
+        },
+        hovertemplate: '<b>%{y}</b><br>' +
+                       rightPlatform.toUpperCase() + ': %{x}<br>' +
+                       '<extra></extra>'
+    };
+
+    // Find max value for symmetric axis
+    const maxVal = Math.max(
+        ...subcategories.map(s => leftCounts[s] || 0),
+        ...subcategories.map(s => rightCounts[s] || 0)
+    );
+
+    const layout = {
+        ...commonLayout,
+        barmode: 'relative',
+        xaxis: {
+            title: 'Number of Negative Reviews',
+            range: [-maxVal * 1.1, maxVal * 1.1],
+            gridcolor: '#2A2A2A',
+            color: '#A3A3A3',
+            tickvals: [-maxVal, -maxVal/2, 0, maxVal/2, maxVal],
+            ticktext: [maxVal, maxVal/2, 0, maxVal/2, maxVal].map(v => Math.round(v))
+        },
+        yaxis: {
+            title: '',
+            gridcolor: '#2A2A2A',
+            color: '#A3A3A3',
+            automargin: true
+        },
+        legend: {
+            orientation: 'h',
+            yanchor: 'bottom',
+            y: 1.02,
+            xanchor: 'center',
+            x: 0.5,
+            font: { color: '#F5F5F5' }
+        },
+        margin: { t: 40, r: 40, b: 60, l: 200 }
+    };
+
+    Plotly.newPlot('comparisonPyramid', [leftTrace, rightTrace], layout, config);
+}
+
 // Render all charts
 function renderAllCharts(data) {
     // Get checked checkboxes from custom dropdown
@@ -348,4 +457,9 @@ function renderAllCharts(data) {
     renderIntensityChart(data);
     renderCorrelationHeatmap(data);
     renderSentimentDonut(data);
+
+    // Render comparison pyramid with selected platforms
+    const leftPlatform = document.getElementById('leftPlatform')?.value || 'doordash';
+    const rightPlatform = document.getElementById('rightPlatform')?.value || 'ubereats';
+    renderComparisonPyramid(data, leftPlatform, rightPlatform);
 }

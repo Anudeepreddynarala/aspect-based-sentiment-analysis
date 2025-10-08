@@ -144,6 +144,12 @@ doordash-dashboard/
 - Generous whitespace for clarity
 - Responsive layout for all devices
 
+**Sentiment Color Scheme** (Monochromatic Red):
+- Positive: Bright Red (#FF6B6B)
+- Negative: Dark Red (#991B1B)
+- Neutral: Gray (#9CA3AF)
+- *Uses red gradient for brand consistency and clear visual distinction*
+
 ## 🔗 Related Dashboards
 - [Multi-Platform Dashboard](../dashboard-aggregator/) - Compare all platforms
 - [UberEats Dashboard](../dashboard-ubereats/) - UberEats analysis

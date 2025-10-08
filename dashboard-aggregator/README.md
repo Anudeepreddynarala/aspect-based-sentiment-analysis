@@ -10,12 +10,13 @@ This dashboard provides comparative insights across **7,800 unique customer revi
 
 ### Key Features
 
-✨ **5 Interactive Visualizations**
+✨ **6 Interactive Visualizations**
 - Parent aspect negative review analysis
 - Subcategory treemap with rating heatmap
 - Top 3 focus areas by intensity
 - Aspect co-occurrence correlation
 - Sentiment distribution overview
+- **NEW:** Platform comparison pyramid (side-by-side subcategory analysis)
 
 📅 **Dynamic Filtering**
 - Date range selection
@@ -29,10 +30,11 @@ This dashboard provides comparative insights across **7,800 unique customer revi
 - Percentage mentioning top issue
 
 🎨 **Modern Design**
-- DoorDash-branded theme
+- Blue-themed multi-platform design
 - Fully responsive (mobile/tablet/desktop)
 - Smooth animations and hover effects
 - Accessible and professional UI
+- Dark mode optimized
 
 ## 🚀 Quick Start
 
@@ -121,16 +123,33 @@ dashboard/
 #### Sentiment Distribution Donut Chart
 - **Purpose**: Overall sentiment breakdown
 - **Data**: Positive, Negative, Neutral counts
-- **Center Text**: Shows % of all reviews mentioning the top negative aspect
-- **Insights**: High-level sentiment health check
+- **Colors**: Blue (positive), Dark blue (negative), Gray (neutral)
+  - *Monochromatic blue scheme maintains visual harmony and avoids platform color conflicts*
+- **Insights**: High-level sentiment health check across all platforms
 
-### 3. Filters
+#### Platform Comparison Pyramid **NEW**
+- **Purpose**: Side-by-side comparison of negative reviews across platforms
+- **Display**: Population pyramid (butterfly chart) showing top 15 subcategories
+- **Controls**: Select any two platforms to compare (DoorDash vs UberEats by default)
+- **Colors**: Uses actual platform brand colors
+  - DoorDash: Red (#FF4D4D)
+  - UberEats: Green (#06C167)
+  - GrubHub: Orange (#FB923C)
+- **Insights**: Quickly identify platform-specific vs universal pain points
+- **Use Cases**:
+  - Compare DoorDash vs competitors on specific issues
+  - Identify which platform struggles most with delivery, support, etc.
+  - Benchmark your performance against industry peers
 
-| Filter | Type | Effect | Default |
+### 3. Filters & Controls
+
+| Filter/Control | Type | Effect | Default |
 |--------|------|--------|---------|
 | **Start Date** | Date picker | Filters all charts by date range | March 16, 2025 |
 | **End Date** | Date picker | Filters all charts by date range | September 28, 2025 |
-| **Parent Aspect** | Dropdown | Filters treemap only | All Aspects |
+| **Parent Aspect** | Multi-select dropdown | Filters treemap only | All Aspects |
+| **Left Platform** | Dropdown selector | Sets left side of comparison pyramid | DoorDash |
+| **Right Platform** | Dropdown selector | Sets right side of comparison pyramid | UberEats |
 | **Reset Button** | Button | Restores all defaults | N/A |
 
 ## 📊 Data Schema
@@ -157,25 +176,32 @@ The dashboard uses `complete_analysis_20251003_234035.csv` with the following st
 
 ## 🎨 Design Specifications
 
-### Color Palette (DoorDash Theme)
+### Color Palette (Blue Multi-Platform Theme)
 
 ```css
-Primary Red:     #FF3008
-Dark Red:        #E12100
-Accent Red:      #FF6347
-Background:      #FFFFFF
-Card Background: #F5F5F5
-Text Dark:       #191919
-Text Gray:       #696969
-Positive:        #2ECC71
-Negative:        #E74C3C
-Neutral:         #95A5A6
+/* Dashboard Theme */
+Primary Blue:    #60A5FA  (Aggregator accent color)
+Background:      #0F0F0F  (Dark mode base)
+Card Background: #1A1A1A  (Dark cards)
+Text Primary:    #F5F5F5  (Near white)
+Text Secondary:  #A3A3A3  (Light gray)
+
+/* Sentiment Colors (Aggregator-specific) */
+Positive:        #60A5FA  (Blue - matches dashboard theme)
+Negative:        #1E40AF  (Dark blue - harmonious with theme)
+Neutral:         #9CA3AF  (Gray)
+
+/* Platform Brand Colors (Comparison Chart) */
+DoorDash:        #FF4D4D  (Red)
+UberEats:        #06C167  (Green)
+GrubHub:         #FB923C  (Orange)
 ```
 
 ### Typography
-- **Font Family**: System fonts (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto`)
-- **Headings**: 700 weight, DoorDash red
-- **Body Text**: 400 weight, dark gray
+- **Font Family**: Inter (Google Fonts)
+- **Headings**: 700 weight, Aggregator blue
+- **Body Text**: 400 weight, light gray
+- **Dark Mode**: Optimized for reduced eye strain
 
 ### Responsive Breakpoints
 - **Desktop**: > 1200px (2-column grid)

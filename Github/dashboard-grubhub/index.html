@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Delivery Sentiment Analytics Dashboard</title>
+    <title>GrubHub Sentiment Analytics Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
         <!-- Header -->
         <header class="dashboard-header">
             <div class="header-content">
-                <h1 class="dashboard-title">Food Delivery Sentiment Analytics</h1>
-                <p class="dashboard-subtitle">DoorDash | UberEats | GrubHub Customer Feedback Intelligence</p>
+                <h1 class="dashboard-title">GrubHub Sentiment Analytics</h1>
+                <p class="dashboard-subtitle">Customer Feedback Intelligence Dashboard</p>
             </div>
         </header>
 
@@ -87,11 +87,6 @@
                 <div class="kpi-label">Highest Correlation</div>
                 <div class="kpi-value small-text" id="topCorrelation">-</div>
             </div>
-            <div class="kpi-card">
-                <div class="kpi-label">Total Unique Reviews</div>
-                <div class="kpi-value" id="totalReviewsKPI">-</div>
-                <div class="kpi-subtitle" id="platformBreakdown">-</div>
-            </div>
         </div>
 
         <!-- Charts Grid -->
@@ -121,42 +116,17 @@
                 <h2 class="chart-title">Subcategory Co-occurrence Heatmap</h2>
                 <div id="correlationHeatmap"></div>
             </div>
-
-            <!-- Row 4 - Platform Comparison Pyramid Full Width -->
-            <div class="chart-container full-width">
-                <h2 class="chart-title">Platform Comparison: Subcategory Analysis</h2>
-                <div class="comparison-controls">
-                    <div class="platform-selector-group">
-                        <label for="leftPlatform" class="selector-label">Left Platform:</label>
-                        <select id="leftPlatform" class="platform-select">
-                            <option value="doordash">DoorDash</option>
-                            <option value="ubereats">UberEats</option>
-                            <option value="grubhub">GrubHub</option>
-                        </select>
-                    </div>
-                    <div class="vs-divider">VS</div>
-                    <div class="platform-selector-group">
-                        <label for="rightPlatform" class="selector-label">Right Platform:</label>
-                        <select id="rightPlatform" class="platform-select">
-                            <option value="doordash">DoorDash</option>
-                            <option value="ubereats" selected>UberEats</option>
-                            <option value="grubhub">GrubHub</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="comparisonPyramid"></div>
-            </div>
         </div>
 
         <!-- Footer -->
         <footer class="dashboard-footer">
-            <p>Food Delivery Sentiment Analytics | Data Period: March - September 2025 | <span id="footerPlatformStats">Total Reviews: -</span></p>
+            <p>GrubHub Sentiment Analytics | Data Period: March - September 2025 | Total Unique Reviews: <span id="totalReviews">-</span></p>
         </footer>
     </div>
 
-    <script src="js/data-processor.js?v=17"></script>
-    <script src="js/charts.js?v=17"></script>
-    <script src="js/filters.js?v=17"></script>
+    <script src="js/data-processor.js?v=12"></script>
+    <script src="js/charts.js?v=12"></script>
+    <script src="js/filters.js?v=12"></script>
     <script>
         // Initialize dashboard on load
         window.addEventListener('DOMContentLoaded', () => {

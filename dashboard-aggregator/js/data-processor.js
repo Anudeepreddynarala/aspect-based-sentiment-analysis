@@ -76,9 +76,16 @@ function applyFilters() {
     return filteredData;
 }
 
-// Calculate average rating
+// Calculate average rating (per unique review, not per row)
 function calculateAvgRating(data) {
-    const ratings = data.map(d => d.rating).filter(r => !isNaN(r));
+    // Group by review_id and take first rating (all rows with same review_id have same rating)
+    const ratingsByReview = {};
+    data.forEach(d => {
+        if (!ratingsByReview[d.review_id] && !isNaN(d.rating)) {
+            ratingsByReview[d.review_id] = d.rating;
+        }
+    });
+    const ratings = Object.values(ratingsByReview);
     if (ratings.length === 0) return 0;
     return (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2);
 }
@@ -293,9 +300,6 @@ function updateKPIs(data) {
     // Update footer with detailed stats
     const footerText = `Total: ${platformData.total.toLocaleString()} reviews | ${platformBreakdown}`;
     document.getElementById('footerPlatformStats').textContent = footerText;
-
-    // Keep legacy totalReviews for backward compatibility
-    document.getElementById('totalReviews').textContent = platformData.total.toLocaleString();
 }
 
 // Main update function
