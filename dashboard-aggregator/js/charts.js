@@ -1,15 +1,22 @@
-// Accent & Air Design System - DoorDash Dark Edition
+// Accent & Air Design System - Multi-Platform Blue Edition
 const COLORS = {
-    primary: '#FF4D4D',        // DoorDash Red (primary accent - brightened for dark mode)
+    primary: '#60A5FA',        // Aggregator Blue (primary accent - brightened for dark mode)
     blue: '#60A5FA',           // Accent blue (brightened)
     gold: '#FBBF24',           // Accent gold (brightened)
     gray: '#9CA3AF',           // Accent gray (brightened)
     teal: '#2DD4BF',           // Accent teal (brightened)
     positive: '#34D399',       // Success green (brightened)
-    negative: '#FF4D4D',       // Error red (same as primary)
+    negative: '#1E40AF',       // Dark blue (for negative sentiment)
     neutral: '#A3A3A3',        // Neutral gray (brightened)
-    gradientStart: '#FF4D4D',  // DoorDash red
-    gradientEnd: '#DC2626'     // Darker red
+    gradientStart: '#60A5FA',  // Light blue
+    gradientEnd: '#3B82F6'     // Darker blue
+};
+
+// Platform brand colors
+const PLATFORM_COLORS = {
+    doordash: '#FF4D4D',       // DoorDash Red
+    ubereats: '#06C167',       // UberEats Green
+    grubhub: '#FB923C'         // GrubHub Orange
 };
 
 // Common layout settings for dark mode
@@ -325,6 +332,111 @@ function renderSentimentDonut(data) {
     Plotly.newPlot('sentimentDonut', [trace], layout, config);
 }
 
+// 6. Platform Comparison Pyramid Chart
+function renderPlatformComparison(data) {
+    const leftPlatform = document.getElementById('leftPlatform')?.value || 'doordash';
+    const rightPlatform = document.getElementById('rightPlatform')?.value || 'ubereats';
+
+    // Get negative reviews by subcategory for each platform
+    const leftData = data.filter(d => d.platform === leftPlatform && d.sentiment === 'negative');
+    const rightData = data.filter(d => d.platform === rightPlatform && d.sentiment === 'negative');
+
+    // Count by subcategory
+    const leftCounts = {};
+    const rightCounts = {};
+
+    leftData.forEach(d => {
+        leftCounts[d.subcategory] = (leftCounts[d.subcategory] || 0) + 1;
+    });
+
+    rightData.forEach(d => {
+        rightCounts[d.subcategory] = (rightCounts[d.subcategory] || 0) + 1;
+    });
+
+    // Get all subcategories and sort by combined total
+    const allSubcategories = new Set([...Object.keys(leftCounts), ...Object.keys(rightCounts)]);
+    const subcategoryData = Array.from(allSubcategories).map(sub => ({
+        subcategory: sub,
+        left: leftCounts[sub] || 0,
+        right: rightCounts[sub] || 0,
+        total: (leftCounts[sub] || 0) + (rightCounts[sub] || 0)
+    }));
+
+    // Sort by total and take top 15
+    subcategoryData.sort((a, b) => b.total - a.total);
+    const top15 = subcategoryData.slice(0, 15);
+
+    // Create labels (reverse for proper display)
+    const labels = top15.map(d => d.subcategory.replace(/_/g, ' ').toUpperCase()).reverse();
+
+    // Left side trace (negative values for pyramid effect)
+    const leftTrace = {
+        x: top15.map(d => -d.left).reverse(),
+        y: labels,
+        type: 'bar',
+        orientation: 'h',
+        name: leftPlatform.charAt(0).toUpperCase() + leftPlatform.slice(1),
+        marker: {
+            color: PLATFORM_COLORS[leftPlatform],
+            line: { color: '#0F0F0F', width: 1 }
+        },
+        hovertemplate: '<b>%{y}</b><br>' +
+                       leftPlatform.charAt(0).toUpperCase() + leftPlatform.slice(1) + ': %{x}<br>' +
+                       '<extra></extra>',
+        text: top15.map(d => Math.abs(d.left)).reverse(),
+        textposition: 'inside'
+    };
+
+    // Right side trace
+    const rightTrace = {
+        x: top15.map(d => d.right).reverse(),
+        y: labels,
+        type: 'bar',
+        orientation: 'h',
+        name: rightPlatform.charAt(0).toUpperCase() + rightPlatform.slice(1),
+        marker: {
+            color: PLATFORM_COLORS[rightPlatform],
+            line: { color: '#0F0F0F', width: 1 }
+        },
+        hovertemplate: '<b>%{y}</b><br>' +
+                       rightPlatform.charAt(0).toUpperCase() + rightPlatform.slice(1) + ': %{x}<br>' +
+                       '<extra></extra>',
+        text: top15.map(d => d.right).reverse(),
+        textposition: 'inside'
+    };
+
+    const layout = {
+        ...commonLayout,
+        barmode: 'overlay',
+        bargap: 0.1,
+        xaxis: {
+            title: 'Number of Negative Reviews',
+            gridcolor: '#2A2A2A',
+            color: '#A3A3A3',
+            tickformat: ',d',
+            tickvals: null,
+            ticktext: null
+        },
+        yaxis: {
+            gridcolor: '#2A2A2A',
+            color: '#A3A3A3'
+        },
+        showlegend: true,
+        legend: {
+            orientation: 'h',
+            yanchor: 'bottom',
+            y: 1.02,
+            xanchor: 'center',
+            x: 0.5,
+            font: { color: '#F5F5F5', size: 14 }
+        },
+        margin: { t: 60, r: 40, b: 60, l: 200 },
+        height: 600
+    };
+
+    Plotly.newPlot('comparisonPyramid', [leftTrace, rightTrace], layout, config);
+}
+
 // Render all charts
 function renderAllCharts(data) {
     // Get checked checkboxes from custom dropdown
@@ -348,4 +460,5 @@ function renderAllCharts(data) {
     renderIntensityChart(data);
     renderCorrelationHeatmap(data);
     renderSentimentDonut(data);
+    renderPlatformComparison(data);
 }
