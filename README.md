@@ -175,10 +175,17 @@ python run_analysis.py
 ## Interactive Dashboards
 
 ### Live Demos
-- **[Multi-Platform Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)** - Compare all three platforms (7,800 total reviews)
-- **[DoorDash Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)** - DoorDash-specific insights (2,600 reviews)
-- **[UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/)** - UberEats-specific insights (2,600 reviews)
-- **[GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/)** - GrubHub-specific insights (2,600 reviews)
+
+**🎯 [Multi-Platform Aggregator Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)** ⭐ **NEW**
+- Compare all three platforms side-by-side (7,800 total reviews)
+- Platform comparison pyramid with brand colors
+- Cross-platform correlation analysis
+- Dynamic platform selectors
+
+**Platform-Specific Dashboards:**
+- **[DoorDash Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)** - Red theme (2,600 reviews)
+- **[UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/)** - Green theme (2,600 reviews)
+- **[GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/)** - Orange theme (2,600 reviews)
 
 ### Features
 - **Real-time KPI Tracking**: Average rating, top pain points, correlation analysis
@@ -187,8 +194,9 @@ python run_analysis.py
   - Sentiment breakdown donut charts
   - Subcategory treemaps with intensity heatmaps
   - Co-occurrence correlation matrices
-- **Dynamic Filtering**: Date range and aspect filtering
-- **Platform Comparison**: Side-by-side performance metrics
+  - **NEW**: Platform comparison pyramid (side-by-side analysis)
+- **Dynamic Filtering**: Date range, aspect filtering, and platform selectors
+- **Platform Comparison**: Visual benchmarking with brand colors (DoorDash red, UberEats green, GrubHub orange)
 
 ### Running Dashboards Locally
 ```bash
