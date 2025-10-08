@@ -212,8 +212,8 @@ If not already enabled:
 
 **Your dashboards will be live at**:
 - DoorDash: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/`
-- UberEats: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/ubereats-dashboard/`
-- GrubHub: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/grubhub-dashboard/`
+- UberEats: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/`
+- GrubHub: `https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/`
 
 ---
 
