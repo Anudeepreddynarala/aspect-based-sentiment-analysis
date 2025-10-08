@@ -20,7 +20,7 @@ Analyzed **7,800 unique customer reviews** (2,600 per platform) across DoorDash,
 
 ## Business Problem
 
-Food delivery platforms struggle to understand **why** customers are dissatisfied beyond simple star ratings. This project solves that by:
+This project aims to understand the pain points of customers who utilize these Food delivery platforms by:
 
 1. **Automatically categorizing** vague feedback into specific actionable categories
 2. **Quantifying sentiment** across 18 distinct customer experience dimensions
