@@ -2,13 +2,17 @@
 
 // Initialize filters
 function initializeFilters() {
-    // Date filter listeners
+    // Date filter listeners with validation
     document.getElementById('startDate').addEventListener('change', () => {
-        updateDashboard();
+        if (validateDateRange()) {
+            updateDashboard();
+        }
     });
 
     document.getElementById('endDate').addEventListener('change', () => {
-        updateDashboard();
+        if (validateDateRange()) {
+            updateDashboard();
+        }
     });
 
     // Custom dropdown toggle
@@ -134,18 +138,6 @@ function validateDateRange() {
 
     return true;
 }
-
-// Add validation to date inputs
-document.addEventListener('DOMContentLoaded', () => {
-    const startDateInput = document.getElementById('startDate');
-    const endDateInput = document.getElementById('endDate');
-
-    startDateInput.addEventListener('change', validateDateRange);
-    endDateInput.addEventListener('change', validateDateRange);
-
-    // Initialize filter listeners
-    initializeFilters();
-});
 
 // Export functions for use in other modules
 window.initializeFilters = initializeFilters;
