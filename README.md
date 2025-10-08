@@ -176,16 +176,12 @@ python run_analysis.py
 
 ### Live Demos
 
-**🎯 [Multi-Platform Aggregator Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)** ⭐ **NEW**
-- Compare all three platforms side-by-side (7,800 total reviews)
-- Platform comparison pyramid with brand colors
-- Cross-platform correlation analysis
-- Dynamic platform selectors
+**🎯 [Multi-Platform Aggregator Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)**
 
 **Platform-Specific Dashboards:**
-- **[DoorDash Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)** - Red theme (2,600 reviews)
-- **[UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/)** - Green theme (2,600 reviews)
-- **[GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/)** - Orange theme (2,600 reviews)
+- **[DoorDash Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)** 
+- **[UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/)**
+- **[GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/)**
 
 ### Features
 - **Real-time KPI Tracking**: Average rating, top pain points, correlation analysis
