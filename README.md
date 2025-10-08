@@ -363,9 +363,8 @@ This project demonstrates my ability to:
 - Build production-grade ML pipelines
 - Communicate findings to stakeholders
 
-[Your Contact Info]
-[LinkedIn]
-[Portfolio]
+anudeepreddynarala2@gmail.com
+https://www.linkedin.com/in/anudeep-narala/
 
 ---
 
