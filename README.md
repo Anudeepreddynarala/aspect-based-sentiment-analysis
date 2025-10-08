@@ -34,7 +34,7 @@ This project aims to understand the pain points of customers who utilize these F
 ### Two-Stage AI Pipeline
 
 #### Stage 1: Aspect & Sentiment Classification (Fine-tuned FABSA RoBERTa)
-- Each customer review is first passed through a RoBERTa model custom fine-tuned by me with 93.7% accuracy for aspect-based sentiment analysis. [RoBERTa Fine-Tuned Model published at Hugging Face](https://huggingface.co/Anudeep-Narala/fabsa-roberta-sentiment)
+- Each customer review is first passed through a RoBERTa model custom fine-tuned by me with 94% accuracy for aspect-based sentiment analysis. [RoBERTa Fine-Tuned Model published at Hugging Face](https://huggingface.co/Anudeep-Narala/fabsa-roberta-sentiment)
 - The model automatically identifies all relevant **parent aspects** present in the text and determines the **sentiment** (positive, neutral, negative) for each detected aspect.
 - This stage provides a structured overview of which major experience areas (e.g., food, delivery, service, price, interface, overall) are discussed and how customers feel about them.
 - **Example**:  
