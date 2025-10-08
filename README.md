@@ -6,7 +6,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.7-red.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 📊 Executive Summary
+## Executive Summary
 
 Analyzed **7,800 unique customer reviews** (2,600 per platform) across DoorDash, UberEats, and GrubHub to extract actionable insights on customer pain points and satisfaction drivers. Built an AI-powered pipeline that automatically identifies and categorizes customer feedback into 18 distinct aspects with sentiment classification.
 
@@ -18,7 +18,7 @@ Analyzed **7,800 unique customer reviews** (2,600 per platform) across DoorDash,
 
 ---
 
-## 🎯 Business Problem
+## Business Problem
 
 Food delivery platforms struggle to understand **why** customers are dissatisfied beyond simple star ratings. This project solves that by:
 
@@ -29,7 +29,7 @@ Food delivery platforms struggle to understand **why** customers are dissatisfie
 
 ---
 
-## 🔬 Technical Approach
+## Technical Approach
 
 ### Two-Stage AI Pipeline
 
@@ -64,7 +64,7 @@ Customer Review
 
 ---
 
-## 📈 Key Insights & Recommendations
+## Key Insights & Recommendations
 
 ### Platform Comparison
 
@@ -99,7 +99,7 @@ Customer Review
 
 ---
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 ### Subcategories (18 Total)
 
@@ -136,7 +136,7 @@ Customer Review
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.12+
@@ -172,7 +172,7 @@ python run_analysis.py
 
 ---
 
-## 🖥️ Interactive Dashboards
+## Interactive Dashboards
 
 ### Live Demos
 - **[Multi-Platform Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)** - Compare all three platforms (7,800 total reviews)
@@ -204,7 +204,7 @@ python -m http.server 8000
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── data/                          # Input review datasets
@@ -227,7 +227,7 @@ python -m http.server 8000
 
 ---
 
-## 📊 Sample Output
+## Sample Output
 
 ```python
 # Input Review
@@ -256,28 +256,28 @@ python -m http.server 8000
 
 ---
 
-## 🎓 Skills Demonstrated
+## Skills Demonstrated
 
 ### Product Management
-- ✅ **Data-driven decision making**: Quantified customer pain points from unstructured feedback
-- ✅ **Cross-functional thinking**: Bridged business needs with ML implementation
-- ✅ **Prioritization**: Ranked features by customer impact (support > app > delivery)
-- ✅ **Competitive analysis**: Benchmarked 3 platforms to identify gaps
+- **Data-driven decision making**: Quantified customer pain points from unstructured feedback
+- **Cross-functional thinking**: Bridged business needs with ML implementation
+- **Prioritization**: Ranked features by customer impact (support > app > delivery)
+- **Competitive analysis**: Benchmarked 3 platforms to identify gaps
 
 ### Technical Skills
-- ✅ **Machine Learning**: Multi-label classification, sentiment analysis, LLM prompting
-- ✅ **Python Development**: Pipeline architecture, error handling, checkpointing
-- ✅ **GPU Optimization**: CUDA acceleration, batch processing
-- ✅ **Data Analysis**: Pandas, statistical summarization, insight extraction
+- **Machine Learning**: Multi-label classification, sentiment analysis, LLM prompting
+- **Python Development**: Pipeline architecture, error handling, checkpointing
+- **GPU Optimization**: CUDA acceleration, batch processing
+- **Data Analysis**: Pandas, statistical summarization, insight extraction
 
 ### Domain Knowledge
-- ✅ **Customer Experience**: Understanding CX metrics and pain point categorization
-- ✅ **Food Delivery**: Platform-specific workflows and user journeys
-- ✅ **NLP**: Aspect-based sentiment analysis, semantic classification
+- **Customer Experience**: Understanding CX metrics and pain point categorization
+- **Food Delivery**: Platform-specific workflows and user journeys
+- **NLP**: Aspect-based sentiment analysis, semantic classification
 
 ---
 
-## 📊 Results Summary
+## Results Summary
 
 - **7,800 reviews processed** (2,600 per platform)
 - **13,868 aspect-sentiment pairs extracted**
@@ -292,7 +292,7 @@ python -m http.server 8000
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 1. **Time-series analysis**: Track sentiment trends over months
 2. **Root cause clustering**: Group similar complaints for deeper insights
@@ -302,13 +302,13 @@ python -m http.server 8000
 
 ---
 
-## 📝 License
+## License
 
 MIT License - See [LICENSE](LICENSE) file for details
 
 ---
 
-## 👤 About
+## About
 
 **Product Manager | Data Analyst**
 
@@ -318,9 +318,9 @@ This project demonstrates my ability to:
 - Build production-grade ML pipelines
 - Communicate findings to stakeholders
 
-📫 [Your Contact Info]
-💼 [LinkedIn]
-🔗 [Portfolio]
+[Your Contact Info]
+[LinkedIn]
+[Portfolio]
 
 ---
 

@@ -1,14 +1,14 @@
-# 🚗 DoorDash Sentiment Analytics Dashboard
+# DoorDash Sentiment Analytics Dashboard
 
 > **Interactive dashboard for analyzing DoorDash customer feedback with dynamic filtering and comprehensive visualizations**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-FF3008?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/doordash-dashboard/)
 
-## 📊 Overview
+## Overview
 
 This dashboard provides deep insights into **2,600 unique DoorDash customer reviews** from March-September 2025. Built with Plotly.js, it features interactive charts, dynamic filtering, and real-time calculations to identify key pain points specific to DoorDash operations.
 
-## 🎯 DoorDash Performance Metrics
+## DoorDash Performance Metrics
 
 ### Overall Statistics
 - **Total Unique Reviews**: 2,600
@@ -27,7 +27,7 @@ This dashboard provides deep insights into **2,600 unique DoorDash customer revi
 4. **Fees & Charges**: 354 negative mentions
 5. **Value for Money**: 284 negative mentions
 
-## 📈 Dashboard Features
+## Dashboard Features
 
 ### KPI Cards
 - **Average Rating**: 3.02/5 overall platform rating
@@ -72,7 +72,7 @@ Shows which issues appear together in reviews
 - **Parent Aspect**: Multi-select filtering
 - **Reset**: Clear all filters
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Local Setup
 ```bash
@@ -91,7 +91,7 @@ python -m http.server 8000
 - No backend required (static site)
 - Internet connection for CDN resources
 
-## 📁 File Structure
+## File Structure
 ```
 doordash-dashboard/
 ├── index.html                    # Main dashboard HTML
@@ -106,17 +106,17 @@ doordash-dashboard/
 └── README.md                     # This file
 ```
 
-## 💡 Key Insights
+## Key Insights
 
 ### Strengths
-✅ **Highest average rating** among three platforms (3.02/5)
-✅ **Lowest negative sentiment** (54.3% vs 60.7% UberEats, 64.2% GrubHub)
-✅ **Better customer satisfaction** compared to competitors
+- **Highest average rating** among three platforms (3.02/5)
+- **Lowest negative sentiment** (54.3% vs 60.7% UberEats, 64.2% GrubHub)
+- **Better customer satisfaction** compared to competitors
 
 ### Areas for Improvement
-⚠️ **Customer Support**: #1 pain point with highest intensity
-⚠️ **Delivery Reliability**: Significant issue affecting customer trust
-⚠️ **App Usability**: Technical issues impacting user experience
+- **Customer Support**: #1 pain point with highest intensity
+- **Delivery Reliability**: Significant issue affecting customer trust
+- **App Usability**: Technical issues impacting user experience
 
 ### Recommendations
 1. **Invest in support training** and response time improvements
@@ -124,20 +124,20 @@ doordash-dashboard/
 3. **Fix app bugs** and improve UI/UX design
 4. **Review pricing strategy** to address value perception
 
-## 🔧 Technical Stack
+## Technical Stack
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
 - **Charting**: Plotly.js 2.27.0
 - **Data Parsing**: PapaParse 5.4.1
 - **Design**: Dark theme with DoorDash brand colors
 - **Typography**: Inter font family
 
-## 📊 Data Processing
+## Data Processing
 - Filters dataset to DoorDash reviews only
 - Calculates metrics in real-time
 - Handles multi-aspect reviews correctly
 - Uses unique review IDs to avoid duplicates
 
-## 🎨 Design Philosophy
+## Design Philosophy
 **"Accent & Air"** - Clean interface with strategic color use:
 - DoorDash Red (#FF4D4D) as primary accent
 - Dark theme for reduced eye strain
@@ -150,10 +150,10 @@ doordash-dashboard/
 - Neutral: Gray (#9CA3AF)
 - *Uses red gradient for brand consistency and clear visual distinction*
 
-## 🔗 Related Dashboards
-- [Multi-Platform Dashboard](../dashboard-aggregator/) - Compare all platforms
-- [UberEats Dashboard](../dashboard-ubereats/) - UberEats analysis
-- [GrubHub Dashboard](../dashboard-grubhub/) - GrubHub analysis
+## Related Dashboards
+- [Multi-Platform Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/) - Compare all platforms
+- [UberEats Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-ubereats/) - UberEats analysis
+- [GrubHub Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-grubhub/) - GrubHub analysis
 
 ---
 *Last Updated: December 2024*

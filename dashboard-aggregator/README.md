@@ -4,13 +4,13 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-60A5FA?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)
 
-## 📊 Overview
+## Overview
 
 This dashboard provides comparative insights across **7,800 unique customer reviews** from DoorDash, UberEats, and GrubHub (2,600 reviews per platform). Built with Plotly.js, it features interactive charts, dynamic filtering, and real-time calculations to identify platform-specific pain points and cross-platform trends.
 
 ### Key Features
 
-✨ **6 Interactive Visualizations**
+**6 Interactive Visualizations**
 - Parent aspect negative review analysis
 - Subcategory treemap with rating heatmap
 - Top 3 focus areas by intensity
@@ -18,29 +18,29 @@ This dashboard provides comparative insights across **7,800 unique customer revi
 - Sentiment distribution overview
 - **NEW:** Platform comparison pyramid (side-by-side subcategory analysis)
 
-📅 **Dynamic Filtering**
+**Dynamic Filtering**
 - Date range selection
 - Parent aspect filtering
 - One-click reset functionality
 
-📈 **Real-time KPIs**
+**Real-time KPIs**
 - Average rating across all reviews
 - Top negative subcategory (by intensity)
 - Highest correlation pair
 - Percentage mentioning top issue
 
-🎨 **Modern Design**
+**Modern Design**
 - Blue-themed multi-platform design
 - Fully responsive (mobile/tablet/desktop)
 - Smooth animations and hover effects
 - Accessible and professional UI
 - Dark mode optimized
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: View Live Dashboard (Recommended)
 
-Visit the hosted version: **[Live Dashboard Link](https://your-username.github.io/sentiment/dashboard/)**
+Visit the hosted version: **[Live Dashboard](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)**
 
 ### Option 2: Run Locally
 
@@ -68,7 +68,7 @@ npx http-server -p 8000
 php -S localhost:8000
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 dashboard/
@@ -84,7 +84,7 @@ dashboard/
 └── README.md                   # This file
 ```
 
-## 🎯 Dashboard Components
+## Dashboard Components
 
 ### 1. KPI Cards (Top Section)
 
@@ -152,7 +152,7 @@ dashboard/
 | **Right Platform** | Dropdown selector | Sets right side of comparison pyramid | UberEats |
 | **Reset Button** | Button | Restores all defaults | N/A |
 
-## 📊 Data Schema
+## Data Schema
 
 The dashboard uses `complete_analysis_20251003_234035.csv` with the following structure:
 
@@ -174,7 +174,7 @@ The dashboard uses `complete_analysis_20251003_234035.csv` with the following st
 - Unique reviews: **~4,000**
 - Platforms: DoorDash only
 
-## 🎨 Design Specifications
+## Design Specifications
 
 ### Color Palette (Blue Multi-Platform Theme)
 
@@ -208,7 +208,7 @@ GrubHub:         #FB923C  (Orange)
 - **Tablet**: 768px - 1200px (1-column grid)
 - **Mobile**: < 768px (stacked layout)
 
-## 🔧 Technical Details
+## Technical Details
 
 ### Dependencies
 - **Plotly.js** v2.27.0 - Interactive charts
@@ -216,17 +216,17 @@ GrubHub:         #FB923C  (Orange)
 - **Vanilla JavaScript** - No frameworks required
 
 ### Browser Compatibility
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
 
 ### Performance
 - **Load time**: < 2 seconds (including data)
 - **Data size**: ~2MB CSV
 - **Rendering**: Client-side, no backend required
 
-## 🧮 Calculations & Algorithms
+## Calculations & Algorithms
 
 ### Intensity Score
 ```javascript
@@ -248,7 +248,7 @@ correlation[A][B] = count(reviews where A ∈ review AND B ∈ review)
 percentage = (unique_reviews_with_top_aspect / total_unique_reviews) × 100
 ```
 
-## 📖 User Guide
+## User Guide
 
 ### How to Use the Dashboard
 
@@ -293,7 +293,7 @@ percentage = (unique_reviews_with_top_aspect / total_unique_reviews) × 100
 - **Donut Chart**: High negative % = serious issues
 - **Center Text**: If >50%, that aspect is mentioned in majority of reviews
 
-## 🚀 Deployment to GitHub Pages
+## Deployment to GitHub Pages
 
 ### Step 1: Create Repository
 ```bash
@@ -321,11 +321,11 @@ git push -u origin main
 - **Data not found**: Verify `data/complete_analysis_20251003_234035.csv` exists
 - **Filters not working**: Hard refresh (`Cmd+Shift+R` / `Ctrl+Shift+R`)
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License.
 
-## 👤 About
+## About
 
 **Created by**: [Your Name]
 **Portfolio**: [Your Portfolio URL]
