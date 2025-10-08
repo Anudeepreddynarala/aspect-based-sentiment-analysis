@@ -129,11 +129,11 @@ function renderTreemap(data, parentFilter = 'all') {
         marker: {
             colors: avgRatings,
             colorscale: [
-                [0, '#450A0A'],      // Very dark red (low rating)
-                [0.25, '#7F1D1D'],   // Dark red
-                [0.5, '#DC2626'],    // Red
-                [0.75, '#FF4D4D'],   // DoorDash red (bright)
-                [1, '#FCA5A5']       // Light red
+                [0, '#0A2540'],      // Very dark blue (low rating)
+                [0.25, '#1E3A5F'],   // Dark blue
+                [0.5, '#1E40AF'],    // Medium dark blue
+                [0.75, '#3B82F6'],   // Medium blue
+                [1, '#93C5FD']       // Light blue
             ],
             showscale: true,
             colorbar: {
@@ -195,7 +195,7 @@ function renderIntensityChart(data) {
         type: 'bar',
         orientation: 'h',
         marker: {
-            color: [COLORS.primary, '#EF4444', '#F87171'],
+            color: [COLORS.primary, '#3B82F6', '#60A5FA'],
             line: { color: '#0F0F0F', width: 1 }
         },
         text: intensityData.map(d => `Intensity: ${d.intensity.toFixed(0)}`),
@@ -238,11 +238,11 @@ function renderCorrelationHeatmap(data) {
         type: 'heatmap',
         colorscale: [
             [0, '#0F0F0F'],      // Dark background (no correlation)
-            [0.2, '#450A0A'],    // Very dark red
-            [0.4, '#7F1D1D'],    // Dark red
-            [0.6, '#DC2626'],    // Medium red
-            [0.8, '#FF4D4D'],    // DoorDash red (bright)
-            [1, '#FCA5A5']       // Light red (strong correlation)
+            [0.2, '#0A2540'],    // Very dark blue
+            [0.4, '#1E3A5F'],    // Dark blue
+            [0.6, '#1E40AF'],    // Medium dark blue
+            [0.8, '#3B82F6'],    // Medium blue
+            [1, '#93C5FD']       // Light blue (strong correlation)
         ],
         showscale: true,
         colorbar: {
@@ -304,7 +304,7 @@ function renderSentimentDonut(data) {
         hole: 0.55,
         domain: { y: [0.15, 1] },
         marker: {
-            colors: ['#FF6B6B', '#991B1B', '#9CA3AF'],  // Bright red (positive), Dark red (negative), Gray (neutral)
+            colors: ['#93C5FD', '#1E40AF', '#9CA3AF'],  // Light blue (positive), Dark blue (negative), Gray (neutral)
             line: { color: '#0F0F0F', width: 2 }
         },
         textinfo: 'label+percent',

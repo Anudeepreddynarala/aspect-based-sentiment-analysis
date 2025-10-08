@@ -2,6 +2,8 @@
 
 > **Interactive dashboard comparing customer sentiment across DoorDash, UberEats, and GrubHub**
 
+⚠️ **Status:** This dashboard is FINALIZED and fully functional. See `claude.md` for implementation details before making any modifications.
+
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Dashboard-60A5FA?style=for-the-badge)](https://anudeepreddynarala.github.io/aspect-based-sentiment-analysis/dashboard-aggregator/)
 
 ## Overview
@@ -169,10 +171,10 @@ The dashboard uses `complete_analysis_20251003_234035.csv` with the following st
 | `platform` | String | Data source | `doordash` |
 
 **Dataset Stats:**
-- Total records: **13,869**
+- Total records: **13,869** (aspect-level mentions)
 - Date range: **March 16 - September 28, 2025**
-- Unique reviews: **~4,000**
-- Platforms: DoorDash only
+- Unique reviews: **7,800** (2,600 per platform)
+- Platforms: DoorDash, UberEats, GrubHub
 
 ## Design Specifications
 

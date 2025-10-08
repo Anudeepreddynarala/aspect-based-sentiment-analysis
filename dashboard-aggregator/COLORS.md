@@ -1,5 +1,9 @@
 # Multi-Platform Aggregator Dashboard Color Scheme
 
+⚠️ **IMPORTANT: DO NOT MODIFY THIS COLOR SCHEME**
+
+This color configuration has been finalized and tested. Any changes to colors should only be made with explicit approval.
+
 ## Dashboard Theme: Blue
 
 The aggregator dashboard uses a blue color scheme to remain neutral and not favor any specific platform.
@@ -51,11 +55,58 @@ GrubHub:         #FB923C  (Orange)
 
 ## Chart-Specific Colors
 
-### All Charts (Except Comparison Pyramid)
-- Use **blue gradients** for consistency with the aggregator theme
-- Includes: Bar charts, treemaps, heatmaps, focus areas
+### 1. Parent Aspects Bar Chart
+- Primary blue bars: `#60A5FA`
+- Used for all bars in the chart
 
-### Platform Comparison Pyramid
-- Uses **platform brand colors** (red/green/orange)
+### 2. Treemap (Subcategory Breakdown)
+- **Blue gradient scale** based on average rating:
+  ```css
+  [0, '#0A2540']      // Very dark blue (low rating)
+  [0.25, '#1E3A5F']   // Dark blue
+  [0.5, '#1E40AF']    // Medium dark blue
+  [0.75, '#3B82F6']   // Medium blue
+  [1, '#93C5FD']      // Light blue (high rating)
+  ```
+
+### 3. Top 3 Focus Areas (Intensity Chart)
+- Bar colors (ranked):
+  1. `#60A5FA` (Primary blue - highest intensity)
+  2. `#3B82F6` (Medium blue - second)
+  3. `#60A5FA` (Light blue - third)
+
+### 4. Correlation Heatmap
+- **Blue gradient scale** for co-occurrence strength:
+  ```css
+  [0, '#0F0F0F']      // Dark background (no correlation)
+  [0.2, '#0A2540']    // Very dark blue
+  [0.4, '#1E3A5F']    // Dark blue
+  [0.6, '#1E40AF']    // Medium dark blue
+  [0.8, '#3B82F6']    // Medium blue
+  [1, '#93C5FD']      // Light blue (strong correlation)
+  ```
+
+### 5. Sentiment Donut Chart
+- Positive: `#93C5FD` (Light blue)
+- Negative: `#1E40AF` (Dark blue)
+- Neutral: `#9CA3AF` (Gray)
+
+### 6. Platform Comparison Pyramid
+- **Uses platform brand colors** (EXCEPTION to blue theme):
+  - DoorDash: `#FF4D4D` (Red)
+  - UberEats: `#06C167` (Green)
+  - GrubHub: `#FB923C` (Orange)
 - Allows direct visual association with each platform
 - Makes comparisons intuitive and immediately recognizable
+
+## Interactive Elements
+
+### Buttons
+- **Reset Button**:
+  - Background: `#60A5FA` (Blue)
+  - Hover: `#3B82F6` (Darker blue)
+
+### Form Controls
+- **Focus/Hover states**: Blue (`#60A5FA`)
+- **Checkboxes**: Blue accent (`#60A5FA`)
+- **Dropdown borders**: Blue on hover (`#60A5FA`)

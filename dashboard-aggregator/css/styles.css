@@ -231,7 +231,7 @@ body {
 }
 
 .reset-button:hover {
-    background: #D01700;
+    background: #3B82F6;
     box-shadow: var(--shadow-hover);
     transform: translateY(-1px);
 }

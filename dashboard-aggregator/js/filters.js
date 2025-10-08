@@ -44,6 +44,22 @@ function initializeFilters() {
     document.getElementById('resetFilters').addEventListener('click', () => {
         resetAllFilters();
     });
+
+    // Platform comparison selector listeners
+    const leftPlatformSelect = document.getElementById('leftPlatform');
+    const rightPlatformSelect = document.getElementById('rightPlatform');
+
+    if (leftPlatformSelect) {
+        leftPlatformSelect.addEventListener('change', () => {
+            updateDashboard();
+        });
+    }
+
+    if (rightPlatformSelect) {
+        rightPlatformSelect.addEventListener('change', () => {
+            updateDashboard();
+        });
+    }
 }
 
 // Handle aspect checkbox changes
